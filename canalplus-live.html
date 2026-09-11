@@ -9,8 +9,76 @@
   .live-card img { width: 100%; }
   .live-card strong, .live-title { display: block; margin-top: 8px; font-size: 18px; font-weight: 400; line-height: 22px; }
   @media (max-width: 760px) { .live-head { padding: 28px 18px; } .filters { height: auto; padding: 18px; } .grid { padding: 18px; } .program { width: auto; padding: 0 14px; } }
+  .live-head .tab { cursor:pointer; }
+  .evening-grid { display:none; }
+  .evening-media { position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; border-radius:3px; background:#171717; }
+  .evening-grid .program-image { display:block; width:100%; height:100%; object-fit:cover; }
+  .evening-grid .live-badge { position:absolute; top:5px; right:5px; padding:3px 6px; border-radius:2px; background:var(--pink); color:#fff; font:700 12px/1 Hind,Arial,sans-serif; }
+  .evening-grid .channel-logo { position:absolute; left:8px; bottom:8px; width:48px; height:36px; object-fit:contain; }
+  .evening-grid .evening-progress { position:absolute; left:8px; right:8px; bottom:5px; height:4px; overflow:hidden; border-radius:3px; background:#444; }
+  .evening-grid .evening-progress::before { content:""; display:block; width:var(--progress,18%); height:100%; background:var(--pink); }
+  .evening-grid .live-title { display:block; margin-top:8px; font-size:18px; font-weight:400; line-height:22px; }
+  .evening-grid .program-subtitle { display:block; color:#888; font-size:16px; line-height:20px; }
+  @media (max-width: 760px) { .evening-grid .channel-logo { left:6px; bottom:6px; } }
 </style>
 <script>document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.live-card strong').forEach(el=>{const title=document.createElement('span');title.className='live-title';title.textContent=el.textContent;el.replaceWith(title)});document.querySelector('.nav a:nth-child(3)').href='./canalplus-channels.html';document.querySelector('.nav a:nth-child(4)').href='./canalplus-videos.html'});</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const sharedMenuScript = document.createElement('script');
+  sharedMenuScript.src = './user-menu.js';
+  document.body.append(sharedMenuScript);
+  const programs = [
+    ["Qui sera le plus nul ?", "Partie 1", "https://thumb.canalplus.pro/http/unsafe/254x143/filters:quality(55)/media.prod.hawc.canal.aws.io-cplus.net/d04554649b48252964c2122bb3b3ceab.jpg", "TF1", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/66746746", 18],
+    ["A l'instinct", "Episode 2 : En eaux profondes", "https://thumb.canalplus.pro/http/unsafe/254x143/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/121956229", "FRANCE 2", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/67032119", 14],
+    ["La carte aux trésors", "La Dombes", "https://thumb.canalplus.pro/http/unsafe/254x143/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/124967945", "FRANCE 3", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/67033022", 10],
+    ["L'affaire Bojarski", "Film Drame", "https://thumb.canalplus.pro/http/unsafe/254x143/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/31072813/canal-ouah_50001/STD169LT/myCANAL_16x9_Logotype_MEA_1920x1080-GSoU", "CANAL+", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/301/canal-ouah/CHN43FN/CHN43FN_301_29082023", 11],
+    ["The Queen", "Film biopic", "https://thumb.canalplus.pro/http/unsafe/254x143/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/101590/canal-ouah_50074/STD169LT/myCANAL_16x9_Logotype_MEA_1920x1080-XrHI", "FRANCE 5", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/67033026", 18],
+    ["Le Jardinier", "Film Action", "https://thumb.canalplus.pro/http/unsafe/254x143/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/125098645", "M6", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/313/canal-ouah/CHN43FN/CHN43FN_M6_20220415", 12],
+    ["Meurtres à Sandhamn - Saison 11", "Episode 2 : Rakel", "https://thumb.canalplus.pro/http/unsafe/254x143/filters:quality(55)/media.prod.hawc.canal.aws.io-cplus.net/84b9affff32665ac91d4de4ae96c3e4e.jpg", "ARTE", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/3932761", 30],
+    ["Quarts de finale", "Paris Major", "https://thumb.canalplus.pro/http/unsafe/254x143/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/123740219", "CANAL+ SPORT 360", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/83/canal-ouah/CHN43FN/CHN43FN_83_29082023", 70],
+    ["Paris-SG / Strasbourg", "Arkema Première Ligue - 2e journée", "https://thumb.canalplus.pro/http/unsafe/254x143/filters:quality(55)/mht.images.prod.siec.canal.aws.io/program/1321871/7/1321871_7-470711a0-56ed-4c76-beaf-01b9a86eb403.jpg", "CANAL+ FOOT", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/19/canal-ouah/CHN43FN/CHN43FN_19_29082023", 23],
+    ["Grenoble / Agen", "Pro D2 - 3e journée", "https://thumb.canalplus.pro/http/unsafe/254x143/filters:quality(55)/mht.images.prod.siec.canal.aws.io/program/1321227/24/1321227_24-9218cece-b616-4815-aab6-59ee91494f6d.jpg", "CANAL+ SPORT", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/177/canal-ouah/CHN43FN/CHN43FN_177_29082023", 21],
+    ["Anaconda", "Film Comédie", "https://thumb.canalplus.pro/http/unsafe/254x143/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/30932749/canal-ouah_50001/STD169LT/myCANAL_16x9_Logotype_MEA_1920x1080-AbWp", "CANAL+ BOX OFFICE", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/1074/canal-ouah/CHN43FN/CHN43FN_1074_29082023", 24],
+    ["Valmont", "Film Drame", "https://thumb.canalplus.pro/http/unsafe/254x143/canalplus-cdn.canal-plus.io/p1/unit/438742/canal-ouah_50001/STD169LT/myCANAL_16x9_Logotype_MEA_1920x1080-N0R0", "CANAL+ GRAND ECRAN", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/900/canal-ouah/CHN43FN/CHN43FN_900_29082023", 15],
+    ["La cité interdite", "Film Suspense", "https://thumb.canalplus.pro/http/unsafe/254x143/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/32023657/canal-ouah_50001/STD169LT/myCANAL_16x9_Logotype_MEA_1920x1080-dvh_", "CANAL+ CINEMA(S)", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/198/canal-ouah/CHN43FN/CHN43FN_198_29082023", 17],
+    ["Une tonne cinq - Saison 1", "Episode 3 : L'engrenage", "https://thumb.canalplus.pro/http/unsafe/254x143/img-hapi.canalplus.pro:80/ServiceImage/ImageID/109985054", "CANAL+ DOCS", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/899/canal-ouah/CHN43FN/CHN43FN_899_29082023", 51],
+    ["La rose écarlate - Saison 1", "Episode 4 : Une vie de château", "https://thumb.canalplus.pro/http/unsafe/254x143/canalplus-cdn.canal-plus.io/p1/unit/30822572/canal-ouah/STD169/104_UNEVIEDECHATEAU-eFG9", "CANAL+ KIDS", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/259/canal-ouah/CHN43FN/CHN43FN_259_29082023", 0],
+    ["La sélection des programmes à ne pas manquer", "Divers", "https://thumb.canalplus.pro/http/unsafe/254x143/img-hapi.canalplus.pro:80/ServiceImage/ImageID/31732807", "A LA UNE", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/31732807", 13],
+    ["En fanfare", "Film Comédie dramatique", "https://thumb.canalplus.pro/http/unsafe/254x143/canalplus-cdn.canal-plus.io/p1/unit/27121720/canal-ouah_50002/STD169LT/myCANAL_16x9_Logotype_MEA_1920x1080-LFMq", "OCS", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/322/canal-ouah/CHN43FN/CHN43FN_322_20240703-lyaw", 33],
+    ["Robocop", "Film Science-fiction", "https://thumb.canalplus.pro/http/unsafe/254x143/img-hapi.canalplus.pro:80/ServiceImage/ImageID/97183288", "CINE+ FRISSON", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/398/canal-ouah/CHN43FN/CHN43FN_398_20240703--MGY", 30],
+    ["Hors du temps", "Film Drame", "https://thumb.canalplus.pro/http/unsafe/254x143/canalplus-cdn.canal-plus.io/p1/unit/115056/canal-ouah_50002/STD169LT/1075090_001-YaNh", "CINE+ EMOTION", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/396/canal-ouah/CHN43FN/CHN43FN_396_20240703-ziX9", 32],
+    ["Albator, corsaire de l'espace", "Film Animation", "https://thumb.canalplus.pro/http/unsafe/254x143/img-hapi.canalplus.pro:80/ServiceImage/ImageID/94168308", "CINE+ FAMILY", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/533/canal-ouah/CHN43FN/CHN43FN_533_20240703-hEX8", 31],
+    ["Macbeth", "Film Drame", "https://thumb.canalplus.pro/http/unsafe/254x143/img-hapi.canalplus.pro:80/ServiceImage/ImageID/104867981", "CINE+ FESTIVAL", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/532/canal-ouah/CHN43FN/CHN43FN_532_20240703-kAx_", 31],
+    ["Le mépris", "Film Drame", "https://thumb.canalplus.pro/http/unsafe/254x143/canalplus-cdn.canal-plus.io/p1/unit/436969/canal-ouah/STD169LT/myCANAL_16x9_Logotype_MEA_1920x1080", "CINE+ CLASSIC", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/531/canal-ouah/CHN43FN/CHN43FN_531_20240703-2TQN", 33],
+    ["Miami Vice, deux flics à Miami", "Film Policier", "https://thumb.canalplus.pro/http/unsafe/254x143/canalplus-cdn.canal-plus.io/p1/unit/1163230/canal-ouah/STD169LT/myCANAL_16x9_Logotype_MEA_1920x108015", "ACTION", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/694/canal-ouah/CHN43FN/CHN43FN_694_20240611-j9xY", 26],
+    ["Antiviral", "Film Science-fiction", "https://thumb.canalplus.pro/http/unsafe/254x143/img-hapi.canalplus.pro:80/ServiceImage/ImageID/115814859", "TCM CINEMA", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/374/canal-ouah/CHN43FN/CHN43FN_374_20240611-hjHG", 28],
+    ["Les enquêtes de Vera - Saison 12", "Episode 2 : Un homme d'honneur", "https://thumb.canalplus.pro/http/unsafe/254x143/img-hapi.canalplus.pro:80/ServiceImage/ImageID/123924248", "POLAR+", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/61718410", 30],
+    ["La Brea - Saison 2", "Episode 9 : Meurtre à la clairière", "https://thumb.canalplus.pro/http/unsafe/254x143/img-hapi.canalplus.pro:80/ServiceImage/ImageID/117260684", "SERIE CLUB", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/19132964", 59],
+    ["I Love You, Man", "Film Comédie", "https://thumb.canalplus.pro/http/unsafe/254x143/img-hapi.canalplus.pro:80/ServiceImage/ImageID/53905675", "WARNER TV", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/694/canal-ouah/CHN43FN/CHN43FN_694_20240611-j9xY", 26],
+    ["G.I. Joe : le réveil du cobra", "Film Action", "https://thumb.canalplus.pro/http/unsafe/254x143/img-hapi.canalplus.pro:80/ServiceImage/ImageID/100471936", "RTL9", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/50052/canal-ouah/CHN43FN/RTL9_chn43fn", 20],
+    ["Dark Angel - Saison 2", "Episode 12 : 12 heures de sursis", "https://thumb.canalplus.pro/http/unsafe/254x143/img-hapi.canalplus.pro:80/ServiceImage/ImageID/116356167", "AB1", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/611/canal-ouah/CHN43FN/AB1_BLANC_640x480-Fza-", 58]
+  ];
+  const nowGrid = document.querySelector('.grid');
+  const eveningGrid = document.createElement('section');
+  eveningGrid.className = 'grid evening-grid';
+  eveningGrid.setAttribute('aria-label', 'Programmes de ce soir');
+  programs.forEach(([title, subtitle, image, channel, logo, progress]) => {
+    const card = document.createElement('a');
+    card.className = 'live-card';
+    card.href = '#';
+    card.innerHTML = `<div class="evening-media"><img class="program-image" src="${image}" alt="${title}"><span class="live-badge">LIVE</span><img class="channel-logo" src="${logo}" alt="${channel}"><span class="evening-progress" style="--progress:${progress}%"></span></div><span class="live-title">${title}</span><span class="program-subtitle">${subtitle}</span>`;
+    eveningGrid.append(card);
+  });
+  nowGrid.insertAdjacentElement('afterend', eveningGrid);
+  const tabs = document.querySelectorAll('.live-head .tab');
+  const showGrid = (index) => {
+    tabs.forEach((tab, tabIndex) => tab.classList.toggle('active', tabIndex === index));
+    nowGrid.style.display = index === 0 ? 'grid' : 'none';
+    eveningGrid.style.display = index === 1 ? 'grid' : 'none';
+  };
+  tabs.forEach((tab, index) => { tab.setAttribute('role', 'button'); tab.setAttribute('tabindex', '0'); tab.addEventListener('click', () => showGrid(index)); tab.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); showGrid(index); } }); });
+});
+</script>
 <a class="live-card" href="#"><img src="https://thumb.canalplus.pro/bran/unsafe/254x143/filters:quality(55)/image/00/0/vignettemultilive-12.0.png" alt="Multi-Live"><span class="live-title">Multi-Live</span></a>
 <a class="live-card" href="#"><img src="https://thumb.canalplus.pro/http/unsafe/254x143/filters:quality(55)/media.prod.hawc.canal.aws.io-cplus.net/708f59e7e0fff1caf1375c4169879b3b.jpg" alt="Le lycée des secrets"><span class="live-title">Le lycée des secrets</span><span>Téléfilm Suspense</span><button class="resume" aria-label="Voir du début"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.7 4.5a.2.2 0 0 0-.2.2v14.6c0 .11.09.2.2.2h2.412a.2.2 0 0 0 .2-.2v-5.894l11.899 5.95a.2.2 0 0 0 .289-.18V4.824a.2.2 0 0 0-.29-.18l-11.897 5.95V4.7a.2.2 0 0 0 .2-.2z"/></svg></button></a>
 <a class="live-card" href="#"><img src="https://thumb.canalplus.pro/http/unsafe/254x143/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/124926065" alt="Le Mag de la santé"><span class="live-title">Le Mag de la santé</span><span>Emission du 11 sept. 2026</span><button class="resume" aria-label="Voir du début"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.7 4.5a.2.2 0 0 0-.2.2v14.6c0 .11.09.2.2.2h2.412a.2.2 0 0 0 .2-.2v-5.894l11.899 5.95a.2.2 0 0 0 .289-.18V4.824a.2.2 0 0 0-.29-.18l-11.897 5.95V4.7a.2.2 0 0 0 .2-.2z"/></svg></button></a>

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CANAL+ — Mon compte</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root { color-scheme:dark; --bg:#0d0d0d; --panel:#181818; --pink:#e91c4e; --muted:#888; }
+      * { box-sizing:border-box; }
+      body { min-width:320px; min-height:100vh; margin:0; background:var(--bg); color:#fff; font-family:Arial,Helvetica,sans-serif; }
+      .topbar { height:64px; display:flex; align-items:center; gap:46px; padding:0 42px; border-bottom:2px solid #242424; background:#0b0b0b; }
+      .logo { display:block; flex:none; width:128px; height:32px; }
+      .logo img { display:block; width:100%; height:100%; }
+      nav { display:flex; align-items:center; gap:42px; font:600 16px/20px 'Hind',Arial,sans-serif; white-space:nowrap; }
+      nav a { color:#eee; text-decoration:none; }
+      .tools { display:flex; align-items:center; gap:28px; margin-left:auto; }
+      .search { width:24px; height:24px; padding:0; border:0; background:transparent; color:#fff; }
+      .search svg { display:block; width:24px; height:24px; }
+      .avatar { display:block; width:32px; height:32px; border:2px solid #97cbe9; border-radius:50%; background:url('https://thumb.canalplus.pro/bran/unsafe/64x64/filters:quality(85)/image/65de0dc1c69d8/uploads/media/FLAMBEAU_JeromeCommandeur.png') center/cover; }
+      main { width:min(486px,calc(100% - 40px)); margin:26px auto 40px; }
+      h1 { margin:0 0 24px; text-align:center; font:700 30px/36px 'Hind',Arial,sans-serif; }
+      h2 { margin:0 0 18px; font:700 24px/29px 'Hind',Arial,sans-serif; }
+      section + section { margin-top:21px; }
+      .account-row { min-height:50px; display:flex; align-items:center; justify-content:space-between; gap:18px; margin-top:8px; padding:0 16px; background:var(--panel); color:#eee; font:400 16px/21px 'Hind',Arial,sans-serif; }
+      .account-row:first-of-type { margin-top:0; }
+      .account-row button, .account-row a { flex:none; padding:0; border:0; background:transparent; color:var(--pink); font:700 14px/20px 'Hind',Arial,sans-serif; text-decoration:none; cursor:pointer; }
+      .account-row .chevron { width:9px; height:9px; border-top:2px solid #aaa; border-right:2px solid #aaa; transform:rotate(45deg); }
+      .hint { margin:7px 0 0; color:var(--muted); font:400 13px/17px 'Hind',Arial,sans-serif; }
+      .logout { display:block; width:299px; height:42px; margin:18px auto 0; border:0; border-radius:4px; background:#272727; color:#eee; font:400 14px/42px 'Hind',Arial,sans-serif; cursor:pointer; }
+      .account-row:focus-within, .logout:focus-visible, a:focus-visible, button:focus-visible { outline:2px solid #fff; outline-offset:3px; }
+      @media (max-width:760px) { .topbar { gap:20px; padding:0 18px; } .logo { width:112px; } nav { gap:20px; overflow:hidden; } nav a:nth-child(n+3) { display:none; } main { margin-top:32px; } h1 { font-size:28px; } .logout { width:100%; } }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="./canalplus-home-improved.html" aria-label="CANAL+, accueil"><img src="./canalplus-logo-v2.svg" alt="CANAL+" /></a>
+      <nav aria-label="Navigation principale"><a href="./canalplus-home-improved.html">Accueil</a><a href="./canalplus-live.html">TV en direct</a><a href="./canalplus-channels.html">Chaînes &amp; Apps</a><a href="./canalplus-videos.html">Mes vidéos</a></nav>
+      <div class="tools"><button class="search" type="button" aria-label="Rechercher"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M17.762 14.07a5.52 5.52 0 0 1-3.917 1.622 5.539 5.539 0 1 1 3.917-1.623m1.821-9.653A8.2 8.2 0 0 0 13.75 2a8.2 8.2 0 0 0-5.834 2.417 8.2 8.2 0 0 0-2.417 5.835 8.2 8.2 0 0 0 1.527 4.78l-4.623 4.624a1.372 1.372 0 0 0 1.94 1.941l4.625-4.623a8.2 8.2 0 0 0 4.78 1.526 8.2 8.2 0 0 0 5.836-2.415A8.2 8.2 0 0 0 22 10.25a8.2 8.2 0 0 0-2.417-5.834" clip-rule="evenodd" /></svg></button><a class="avatar" href="./canalplus-home-improved.html" aria-label="Retour à l'accueil"></a></div>
+    </header>
+    <main>
+      <h1>Mon compte</h1>
+      <section aria-labelledby="subscription-title">
+        <h2 id="subscription-title">Mon abonnement</h2>
+        <div class="account-row"><span>Mise à jour des droits</span><button type="button">Réactiver</button></div>
+        <p class="hint">Si votre liste de chaînes ne vous semble pas à jour, vous pouvez réactiver vos droits.</p>
+      </section>
+      <section aria-labelledby="account-title">
+        <h2 id="account-title">Mon compte CANAL+</h2>
+        <div class="account-row"><span>amelien.delah aie@gmail.com</span><button type="button">Modifier</button></div>
+        <div class="account-row"><span>Mot de passe</span><button type="button">Modifier</button></div>
+        <div class="account-row"><span>Contacts de sécurité</span><button type="button">Gérer</button></div>
+        <p class="hint">Vos informations de contact pour protéger et sécuriser votre compte.</p>
+        <div class="account-row"><span>Pseudo dans l'Assistance</span><button type="button">Gérer</button></div>
+        <div class="account-row"><span>Restrictions d'accès (code parental, code achat...)</span><span class="chevron" aria-hidden="true"></span></div>
+        <div class="account-row"><span>Suppression de compte</span><button type="button">Supprimer</button></div>
+      </section>
+      <button class="logout" type="button" onclick="window.location.assign('./canalplus-home-improved.html')">Déconnecter</button>
+    </main>
+    <script src="./user-menu.js"></script>
+  </body>
+</html>

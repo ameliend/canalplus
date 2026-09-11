@@ -29,9 +29,9 @@
       .profile-card:nth-child(2) .profile-avatar { background-position:-88px 0; }
       .profile-card:nth-child(3) .profile-avatar { background-position:-176px 0; }
       .profile-card:nth-child(4) .profile-avatar { display:grid; place-items:center; background:#8164ca; color:#fff; font:700 34px/1 'Hind', Arial, sans-serif; }
-      .manage-profiles { display:block; width:max-content; margin:18px auto 36px; color:var(--pink); font:600 18px/22px 'Hind', Arial, sans-serif; text-decoration:none; }
+      .manage-profiles { display:block; width:max-content; margin:12px auto 24px; color:var(--pink); font:600 18px/22px 'Hind', Arial, sans-serif; text-decoration:none; }
       .menu-divider { height:1px; background:#292929; }
-      .menu-links { display:grid; gap:13px; padding:36px 32px 26px; }
+      .menu-links { display:grid; gap:4px; padding:36px 32px 26px; }
       .menu-link { display:flex; align-items:center; gap:16px; color:#fff; font:400 16px/26px 'Hind', Arial, sans-serif; text-decoration:none; }
       .menu-icon { width:26px; height:26px; flex:none; display:grid; place-items:center; border-radius:3px; color:#fff; font:700 16px/1 Arial, sans-serif; }
       .menu-link:nth-child(1) .menu-icon, .menu-link:nth-child(2) .menu-icon { background:#2ec2db; }
@@ -101,6 +101,34 @@
       }
       @media (prefers-reduced-motion:reduce){ .rail{scroll-behavior:auto} .carousel-btn{transition:none} }
       .detail-modal{position:fixed;z-index:40;inset:0;display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:20px 24px;background:#000c}.detail-modal.is-open{display:flex}.detail-modal-panel{position:relative;width:min(1333.33px,100%);height:1861.086px;background:#181818;color:#fff;box-shadow:0 18px 60px #000}.detail-close{position:absolute;z-index:2;top:20px;right:20px;width:32px;height:32px;border:0;border-radius:50%;background:#303030;color:#fff;font-size:29px;line-height:28px;cursor:pointer}.detail-hero{height:562px;position:relative;background:linear-gradient(0deg,#181818 0%,transparent 52%),url('https://thumb.canalplus.pro/http/unsafe/1440x810/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/31072813/canal-ouah_50001/STD169/myCANAL_16x9_MEA_1920x1080-vuaa') center/cover}.detail-copy{padding:0 72px 46px;margin-top:-145px;position:relative;z-index:1}.detail-title{margin:0;font-size:58px;line-height:.9;font-weight:800}.detail-left{width:345px;height:157px;margin-top:22px}.detail-meta{margin:0 0 14px;color:#aaa;font-size:15px}.detail-play{width:345px;height:50px;border:0;border-radius:5px;background:var(--pink);color:#fff;font:700 italic 18px Hind,Arial,sans-serif}.detail-description{position:absolute;top:177px;right:72px;width:345px;height:157px;margin:0;color:#ddd;font-size:16px;line-height:22px}.detail-description .credits{display:block;margin-top:16px;font-size:14px;line-height:20px;color:#aaa}.detail-description a{color:#aaa;text-decoration:underline}.detail-actions{display:flex;gap:18px;margin-top:16px;color:#aaa;font-size:14px}.detail-tabs{display:flex;gap:34px;margin-top:46px;padding:27px 72px;border-top:1px solid #333;background:#101010;color:#bbb;font-size:18px;font-weight:700}.detail-tabs .active{position:relative;color:#fff;padding-bottom:0}.detail-tabs .active::after{content:"";position:absolute;left:0;right:0;top:calc(100% + 5px);height:3px;background:var(--pink)}.detail-related{padding:26px 72px 50px;background:#000}.detail-related h3{margin:0 0 15px;font-size:16px;line-height:20px}.related-rail{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none}.related-rail::-webkit-scrollbar{display:none}.related-card{flex:0 0 212.5px;width:212.5px;height:119.53px;overflow:hidden;border-radius:3px}.related-card img{display:block;width:100%;height:100%;object-fit:cover}@media(max-width:850px){.detail-modal{padding:0}.detail-modal-panel{min-height:100vh}.detail-hero{height:420px}.detail-copy{padding:0 28px 36px;margin-top:-115px}.detail-title{font-size:44px}.detail-description{position:static;width:auto;height:auto;margin:28px 0 0}.detail-play{margin-top:24px}.detail-tabs{padding:24px 28px;overflow:auto;white-space:nowrap}.detail-related{padding:24px 28px}}
+      .detail-modal { padding:10px 0 24px; }
+      .detail-modal-panel { width:min(1206px, calc(100% - 20px)); height:auto; min-height:900px; }
+      .detail-hero { height:535px; background-position:center top; }
+      .detail-copy { padding:0 60px 34px; margin-top:-145px; }
+      .detail-title { font-size:56px; line-height:.9; }
+      .detail-left { width:326px; height:157px; margin-top:22px; }
+      .detail-play { width:326px; height:48px; }
+      .detail-description { top:177px; left:414px; right:60px; width:auto; height:auto; }
+      .detail-actions { width:326px; justify-content:space-around; gap:8px; margin-top:14px; }
+      .detail-actions span { display:flex; flex-direction:column; align-items:center; gap:6px; min-width:62px; color:#aaa; font-size:12px; line-height:16px; text-align:center; }
+      .detail-actions span::before { display:grid; place-items:center; width:28px; height:28px; border-radius:50%; background:#383838; color:#fff; font-size:15px; }
+      .detail-actions span:nth-child(1)::before { content:"↓"; }
+      .detail-actions span:nth-child(2)::before { content:"☆"; }
+      .detail-actions span:nth-child(3)::before { content:"●"; }
+      .detail-actions span::before { display:grid; }
+      .detail-tabs { gap:34px; margin-top:10px; padding:25px 60px; font-size:18px; }
+      @media (max-width:850px) {
+        .detail-modal { padding:0; }
+        .detail-modal-panel { width:100%; min-height:100vh; }
+        .detail-hero { height:360px; }
+        .detail-copy { padding:0 24px 30px; margin-top:-80px; }
+        .detail-title { font-size:42px; }
+        .detail-left { width:100%; height:auto; }
+        .detail-play { width:100%; }
+        .detail-description { position:static; width:auto; margin-top:24px; }
+        .detail-actions { width:100%; }
+        .detail-tabs { gap:22px; overflow-x:auto; padding:20px 24px; white-space:nowrap; }
+      }
     </style>
   </head>
   <body>
@@ -137,8 +165,10 @@
       document.querySelector('.topbar nav a:nth-child(2)').href = './canalplus-live.html';
       document.querySelector('.topbar nav a:nth-child(3)').href = './canalplus-channels.html';
       document.querySelector('.topbar nav a:nth-child(4)').href = './canalplus-videos.html';
+      document.querySelectorAll('.menu-link')[0].href = './canalplus-account.html';
       document.querySelectorAll('.menu-link')[6].href = './canalplus-settings.html';
       const bojarskiModal = document.querySelector('#bojarski-modal');
+      bojarskiModal.querySelectorAll('.detail-actions span').forEach((action, index) => { action.textContent = ['Télécharger', 'Playlist', 'Opinion'][index]; });
       const openBojarski = () => { bojarskiModal.classList.add('is-open'); bojarskiModal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; bojarskiModal.querySelector('.detail-close').focus(); };
       const closeBojarski = () => { bojarskiModal.classList.remove('is-open'); bojarskiModal.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; };
       document.querySelectorAll('[aria-label="Voir L\'Affaire Bojarski"]').forEach((link) => link.addEventListener('click', (event) => { event.preventDefault(); openBojarski(); }));
