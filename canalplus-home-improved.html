@@ -32,8 +32,8 @@
       .manage-profiles { display:block; width:max-content; margin:18px auto 36px; color:var(--pink); font:600 18px/22px 'Hind', Arial, sans-serif; text-decoration:none; }
       .menu-divider { height:1px; background:#292929; }
       .menu-links { display:grid; gap:13px; padding:36px 32px 26px; }
-      .menu-link { display:flex; align-items:center; gap:16px; color:#fff; font:400 18px/28px 'Hind', Arial, sans-serif; text-decoration:none; }
-      .menu-icon { width:28px; height:28px; flex:none; display:grid; place-items:center; border-radius:3px; color:#fff; font:700 18px/1 Arial, sans-serif; }
+      .menu-link { display:flex; align-items:center; gap:16px; color:#fff; font:400 16px/26px 'Hind', Arial, sans-serif; text-decoration:none; }
+      .menu-icon { width:26px; height:26px; flex:none; display:grid; place-items:center; border-radius:3px; color:#fff; font:700 16px/1 Arial, sans-serif; }
       .menu-link:nth-child(1) .menu-icon, .menu-link:nth-child(2) .menu-icon { background:#2ec2db; }
       .menu-link:nth-child(3) .menu-icon { background:#ffb900; }
       .menu-link:nth-child(4) .menu-icon { background:#82a4b6; }
@@ -137,6 +137,7 @@
       document.querySelector('.topbar nav a:nth-child(2)').href = './canalplus-live.html';
       document.querySelector('.topbar nav a:nth-child(3)').href = './canalplus-channels.html';
       document.querySelector('.topbar nav a:nth-child(4)').href = './canalplus-videos.html';
+      document.querySelectorAll('.menu-link')[6].href = './canalplus-settings.html';
       const bojarskiModal = document.querySelector('#bojarski-modal');
       const openBojarski = () => { bojarskiModal.classList.add('is-open'); bojarskiModal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; bojarskiModal.querySelector('.detail-close').focus(); };
       const closeBojarski = () => { bojarskiModal.classList.remove('is-open'); bojarskiModal.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; };
