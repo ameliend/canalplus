@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CANAL+ — Connexion en cours</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Hind:ital,wght@0,400;0,600;0,800;1,800&display=swap" rel="stylesheet" />
+    <style>
+      * { box-sizing:border-box; }
+      body { min-width:320px; min-height:100vh; margin:0; color:#686868; background:#fff; font-family:'Hind', Arial, sans-serif; }
+      .connecting-header { height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 32px; border-bottom:1px solid #eee; }
+      .connecting-logo { width:128px; height:32px; }
+      .secure { display:flex; align-items:center; gap:9px; color:#898989; font-size:14px; line-height:14px; }
+      .lock { position:relative; width:16px; height:14px; margin:3px 0 0; border-radius:1px; background:#969696; }
+      .lock::before { content:""; position:absolute; left:3px; top:-8px; width:8px; height:9px; border:2px solid #969696; border-bottom:0; border-radius:6px 6px 0 0; }
+      .connecting-title { margin:56px 24px 0; text-align:center; font-family:Canal, 'Hind', Arial, sans-serif; font-size:32px; line-height:36px; font-style:italic; font-weight:800; letter-spacing:-.5px; }
+      @media (max-width:760px) { .connecting-header{padding:0 20px}.connecting-title{margin-top:42px;font-size:28px;line-height:32px}.secure{font-size:13px}.connecting-logo{width:112px;height:28px} }
+    </style>
+  </head>
+  <body>
+    <header class="connecting-header"><img class="connecting-logo" src="./assets/canalplus-logo-v2.svg" alt="CANAL+" /><span class="secure"><span class="lock" aria-hidden="true"></span>Connexion sécurisée</span></header>
+    <main aria-live="polite"><h1 class="connecting-title">CONNEXION EN COURS…</h1></main>
+    <script>window.setTimeout(() => window.location.assign('./canalplus-home-improved.html'), 3000);</script>
+  </body>
+</html>

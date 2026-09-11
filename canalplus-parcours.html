@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CANAL+ — Connexion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Hind:ital,wght@0,400;0,500;0,600;0,700;1,700;1,800&display=swap" rel="stylesheet" />
+    <style>
+      :root { --pink:#e52e4d; --line:#ececec; --ink:#0c0c0d; --muted:#929292; }
+      * { box-sizing:border-box; }
+      body { min-width:320px; min-height:100vh; margin:0; color:var(--ink); background:#fff; font-family:'Hind', Arial, sans-serif; }
+      .login-header { height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 32px; border-bottom:1px solid #eee; }
+      .login-logo { display:block; width:128px; height:32px; }
+      .secure { display:flex; align-items:center; gap:9px; color:#898989; font-size:14px; line-height:14px; }
+      .lock { position:relative; width:16px; height:14px; margin:3px 0 0; border-radius:1px; background:#969696; }
+      .lock::before { content:""; position:absolute; left:3px; top:-8px; width:8px; height:9px; border:2px solid #969696; border-bottom:0; border-radius:6px 6px 0 0; }
+      .login-main { width:min(1008px, calc(100% - 48px)); margin:25px auto 0; }
+      h1 { margin:0 0 10px; font-family:Canal, 'Hind', Arial, sans-serif; font-size:32px; line-height:36px; font-style:italic; font-weight:800; letter-spacing:-.5px; }
+      .intro { margin:0; font-size:16px; line-height:24px; font-weight:400; }
+      .signup-link, .help-link { color:var(--pink); font-weight:600; text-decoration:none; }
+      .signup-link::after, .help-link::after { content:"›"; display:inline-block; margin-left:7px; font:700 28px/.45 Arial, sans-serif; vertical-align:-1px; }
+      form { width:478px; max-width:100%; margin-top:28px; }
+      .field { position:relative; height:50px; margin-top:17px; }
+      .field:first-child { margin-top:0; }
+      label { position:absolute; z-index:1; top:5px; left:12px; color:var(--muted); font-size:12px; line-height:14px; pointer-events:none; }
+      input { width:100%; height:100%; padding:20px 48px 5px 12px; border:1px solid #d7d7d7; border-radius:4px; color:var(--ink); background:#fff; font:400 16px/16px 'Hind', Arial, sans-serif; outline:0; }
+      input:focus { border-color:#191919; box-shadow:0 0 0 1px #191919; }
+      .password-toggle { position:absolute; right:2px; top:10px; width:30px; height:30px; padding:0; border:0; background:transparent; color:#c9c9c9; cursor:pointer; }
+      .eye { position:relative; display:block; width:18px; height:11px; margin:auto; border-radius:100% 0; background:#c9c9c9; transform:rotate(45deg); }
+      .eye::after { content:""; position:absolute; inset:3px; border-radius:50%; background:#fff; }
+      .help-link { display:inline-block; margin-top:12px; font-size:16px; line-height:24px; }
+      .actions { width:calc(100% - 48px); display:flex; align-items:center; justify-content:space-between; margin-top:89px; }
+      .button { width:176px; height:50px; border:0; border-radius:3px; font:700 18px/25px 'Hind', Arial, sans-serif; cursor:pointer; }
+      .back { color:#111; background:#eeeeee; }
+      .submit { color:#fff; background:var(--pink); font-family:Canal, 'Hind', Arial, sans-serif; font-style:italic; }
+      .submit:disabled { background:#e6a0ad; cursor:not-allowed; }
+      .button:hover { filter:brightness(.96); }
+      .button:focus-visible, a:focus-visible { outline:3px solid #0d67c5; outline-offset:3px; }
+      @media (max-width:760px) {
+        .login-header { height:64px; padding:0 20px; }
+        .login-logo { width:128px; }
+        .secure { gap:8px; font-size:14px; }
+        .lock { transform:scale(.8); transform-origin:left center; }
+        .login-main { width:calc(100% - 40px); margin-top:26px; }
+        h1 { font-size:30px; line-height:34px; }
+        .intro { font-size:16px; }
+        form { margin-top:28px; }
+        .actions { width:100%; margin-top:62px; gap:16px; }
+        .button { min-width:0; flex:1; height:50px; font-size:18px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="login-header">
+      <img class="login-logo" src="./assets/canalplus-logo-v2.svg" alt="CANAL+" />
+      <span class="secure"><span class="lock" aria-hidden="true"></span>Connexion sécurisée</span>
+    </header>
+    <main class="login-main">
+      <h1>SE CONNECTER</h1>
+      <p class="intro">Connectez-vous avec votre identifiant et votre mot de passe.<br />Vous n'avez pas encore de compte CANAL+ ? <a class="signup-link" href="#">Créer mon compte</a></p>
+      <form id="login-form">
+        <div class="field">
+          <label for="identifier">Identifiant (e-mail ou téléphone)</label>
+          <input id="identifier" name="identifier" type="text" autocomplete="username" required />
+        </div>
+        <div class="field">
+          <label for="password">Mot de passe</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required />
+          <button class="password-toggle" type="button" aria-label="Afficher le mot de passe" aria-pressed="false"><span class="eye" aria-hidden="true"></span></button>
+        </div>
+        <a class="help-link" href="#">Mot de passe oublié</a>
+      </form>
+      <div class="actions">
+        <button class="button back" type="button" onclick="history.back()">Retour</button>
+        <button class="button submit" type="submit" form="login-form" disabled>VALIDER</button>
+      </div>
+    </main>
+    <script>
+      const password = document.querySelector('#password');
+      const toggle = document.querySelector('.password-toggle');
+      const loginForm = document.querySelector('#login-form');
+      const submit = document.querySelector('.submit');
+      toggle.addEventListener('click', () => {
+        const shown = password.type === 'text';
+        password.type = shown ? 'password' : 'text';
+        toggle.setAttribute('aria-pressed', String(!shown));
+        toggle.setAttribute('aria-label', shown ? 'Afficher le mot de passe' : 'Masquer le mot de passe');
+      });
+      loginForm.addEventListener('input', () => {
+        submit.disabled = !loginForm.checkValidity();
+      });
+      loginForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        window.location.assign('./canalplus-connecting.html');
+      });
+    </script>
+  </body>
+</html>
