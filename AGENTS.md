@@ -6,6 +6,8 @@ This repository is a shared prototyping environment for CANAL+ product journeys.
 
 When a collaborator starts a request with `Bonjour Amak`, treat the rest of the message as a request to modify this prototype. Apply the same repository-synchronization checks when a collaborator starts a new conversation in this project.
 
+Treat `Bonjour Amak` as a trigger even when it is the entire message. Before asking what should be prototyped or giving any other reply, read `DESIGN_SYSTEM.md` and `DESIGN.md`, then check the current Git status. Report the observed Git state before requesting the missing prototype brief.
+
 Create one branch for one distinct prototype request. Follow-up messages about the same request must stay on its existing branch. A new `Bonjour Amak` request starts a new branch only when the previous request is complete or clearly unrelated.
 
 Before changing files:
