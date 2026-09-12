@@ -4,7 +4,7 @@ This repository is a shared prototyping environment for CANAL+ product journeys.
 
 ## Starting a prototyping request
 
-When a collaborator starts a request with `Bonjour Amak`, treat the rest of the message as a request to modify this prototype.
+When a collaborator starts a request with `Bonjour Amak`, treat the rest of the message as a request to modify this prototype. Apply the same repository-synchronization checks when a collaborator starts a new conversation in this project.
 
 Create one branch for one distinct prototype request. Follow-up messages about the same request must stay on its existing branch. A new `Bonjour Amak` request starts a new branch only when the previous request is complete or clearly unrelated.
 
@@ -12,9 +12,10 @@ Before changing files:
 
 1. Read `DESIGN_SYSTEM.md` and `DESIGN.md`.
 2. Check the current Git status. Never discard or overwrite uncommitted work.
-3. Never implement directly on `main`.
-4. If the working tree is clean, fetch `origin`, switch to `main`, update it with a fast-forward-only pull, then create a new branch from the updated `main`.
-5. If the working tree is not clean, stop the synchronization and explain which files are already modified.
+3. Fetch the remote state and pull the latest repository version only when the remote differs. Preserve local changes and report any conflict or divergence before continuing work.
+4. Never implement directly on `main`.
+5. If the working tree is clean, switch to `main`, update it with a fast-forward-only pull, then create a new branch from the updated `main`.
+6. If the working tree is not clean, preserve the local changes and explain which files are already modified before synchronizing.
 
 If the collaborator is already on the feature branch for the active request, do not switch branches or synchronize `main`; continue on that branch after checking its status.
 
