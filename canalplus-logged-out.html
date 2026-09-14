@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="./programme-modal.css" rel="stylesheet" />
+    <link href="./header-search.css" rel="stylesheet" />
     <style>
       :root { color-scheme:dark; --bg:#0d0d0d; --panel:#191919; --line:#282828; --pink:#e52e4d; --muted:#9b9b9b; }
       * { box-sizing:border-box; }
@@ -170,15 +172,15 @@
       const createImage = (src, alt) => { const image=document.createElement('img'); image.src=src; image.alt=alt; image.loading='lazy'; return image; };
       const heroRail = document.querySelector('.hero-rail');
       heroItems.forEach(([title,label,imageSrc,logoSrc], index) => {
-        const card=document.createElement('a'); card.className='hero-card'; card.href='#'; card.setAttribute('aria-label',title); card.append(createImage(imageSrc,title));
+        const card=document.createElement('a'); card.className='hero-card'; card.href='#'; card.dataset.programmeTitle=title; card.dataset.programmeImage=imageSrc; card.setAttribute('aria-label',title); card.append(createImage(imageSrc,title));
         const logo=createImage(logoSrc,''); logo.className='channel-logo'; logo.width=48; logo.height=36; card.append(logo);
         if(label){ const sticker=document.createElement('span'); sticker.className=`sticker${label === "S'abonner" ? ' subscribe' : ''}`; sticker.setAttribute('role','status'); if(label !== "S'abonner"){ const icon=document.createElement('span'); icon.className='sticker-icon'; icon.setAttribute('aria-hidden','true'); icon.textContent='▶'; sticker.append(icon); } const copy=document.createElement('span'); copy.textContent=label; sticker.append(copy); card.append(sticker); }
         heroRail.append(card);
       });
       const sportRail = document.querySelector('.sport-rail');
-      sports.forEach(([title,src]) => { const card=document.createElement('a'); card.className='sport-card'; card.href='#'; card.setAttribute('aria-label',title); const poster=document.createElement('span'); poster.className='sport-poster'; poster.append(createImage(src,'')); const logo=createImage(canalLogo,''); logo.className='channel-logo'; logo.width=48; logo.height=36; poster.append(logo); const copy=document.createElement('span'); copy.className='sport-card-title'; copy.textContent=title; card.append(poster,copy); sportRail.append(card); });
+      sports.forEach(([title,src]) => { const card=document.createElement('a'); card.className='sport-card'; card.href='#'; card.dataset.programmeTitle=title; card.dataset.programmeImage=src; card.setAttribute('aria-label',title); const poster=document.createElement('span'); poster.className='sport-poster'; poster.append(createImage(src,'')); const logo=createImage(canalLogo,''); logo.className='channel-logo'; logo.width=48; logo.height=36; poster.append(logo); const copy=document.createElement('span'); copy.className='sport-card-title'; copy.textContent=title; card.append(poster,copy); sportRail.append(card); });
       const summaryRail = document.querySelector('.summaries-rail');
-      summaries.forEach(([title,date,duration,src]) => { const card=document.createElement('a'); card.className='summary-card'; card.href='#'; card.setAttribute('aria-label',`${title}, ${date}, ${duration}`); card.append(createImage(src,'')); const dateBadge=document.createElement('span'); dateBadge.className='meta-badge date'; dateBadge.textContent=date; const durationBadge=document.createElement('span'); durationBadge.className='meta-badge duration'; durationBadge.textContent=duration; card.append(dateBadge,durationBadge); summaryRail.append(card); });
+      summaries.forEach(([title,date,duration,src]) => { const card=document.createElement('a'); card.className='summary-card'; card.href='#'; card.dataset.programmeTitle=title; card.dataset.programmeImage=src; card.setAttribute('aria-label',`${title}, ${date}, ${duration}`); card.append(createImage(src,'')); const dateBadge=document.createElement('span'); dateBadge.className='meta-badge date'; dateBadge.textContent=date; const durationBadge=document.createElement('span'); durationBadge.className='meta-badge duration'; durationBadge.textContent=duration; card.append(dateBadge,durationBadge); summaryRail.append(card); });
 
       document.querySelectorAll('.carousel').forEach((carousel) => {
         const rail=carousel.querySelector('.rail'); const previous=carousel.querySelector('.prev'); const next=carousel.querySelector('.next');
@@ -192,5 +194,7 @@
       document.addEventListener('pointerdown',(event)=>{ if(menu.classList.contains('is-open')&&!menu.contains(event.target)&&!trigger.contains(event.target))setMenu(false); });
       document.addEventListener('keydown',(event)=>{ if(event.key==='Escape'&&menu.classList.contains('is-open')){setMenu(false);trigger.focus();} });
     </script>
+    <script src="./programme-modal.js"></script>
+    <script src="./header-search.js"></script>
   </body>
 </html>

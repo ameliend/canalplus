@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Hind:ital,wght@0,400;0,500;0,600;0,700;1,700&display=swap" rel="stylesheet" />
+    <link href="./header-search.css" rel="stylesheet" />
     <style>
       :root { color-scheme:dark; --bg:#0d0d0d; --panel:#191919; --line:#282828; --pink:#e52e4d; --muted:#929292; }
       * { box-sizing:border-box; }
@@ -143,5 +144,6 @@
       tabs.forEach((tab,index)=>{tab.addEventListener('click',()=>render(index?'evening':'now'));tab.addEventListener('keydown',(event)=>{if(!['ArrowLeft','ArrowRight'].includes(event.key))return;event.preventDefault();const next=tabs[index?0:1];next.focus();next.click();});});render('now');
       const trigger=document.querySelector('.account-trigger');const menu=document.querySelector('.account-menu');const setMenu=open=>{menu.classList.toggle('is-open',open);menu.setAttribute('aria-hidden',String(!open));trigger.setAttribute('aria-expanded',String(open));trigger.setAttribute('aria-label',open?'Fermer le menu utilisateur':'Ouvrir le menu utilisateur');};trigger.addEventListener('click',()=>setMenu(!menu.classList.contains('is-open')));document.addEventListener('pointerdown',event=>{if(menu.classList.contains('is-open')&&!menu.contains(event.target)&&!trigger.contains(event.target))setMenu(false);});document.addEventListener('keydown',event=>{if(event.key==='Escape'&&menu.classList.contains('is-open')){setMenu(false);trigger.focus();}});
     </script>
+    <script src="./header-search.js"></script>
   </body>
 </html>
