@@ -150,15 +150,15 @@
 
   document.addEventListener('click', (event) => {
     const card = event.target.closest(programmeSelector);
-    if (!card || card.matches('.category-card') || card.closest('.chips, .channel-grid, .program-grid, .grid')) return;
+    if (!card || event.target.closest('.series-remove') || card.matches('.category-card') || card.closest('.chips, .channel-grid, .program-grid, .grid')) return;
     event.preventDefault();
     open(card);
   });
 
   document.addEventListener('keydown', (event) => {
     if (!modal.classList.contains('is-open')) {
-      const card = event.target.closest?.('.video-card');
-      if (card && (event.key === 'Enter' || event.key === ' ')) {
+      const card = event.target.closest?.(programmeSelector);
+      if (card?.matches('[role="button"]') && (event.key === 'Enter' || event.key === ' ')) {
         event.preventDefault();
         open(card);
       }

@@ -8,6 +8,8 @@
 
   const header = document.querySelector('header');
   if (!header || header.querySelector('.header-search')) return;
+  const pageName = window.location.pathname.split('/').pop();
+  const homePage = pageName.startsWith('canalplus-logged-out') ? './canalplus-logged-out.html' : './canalplus-home-improved.html';
 
   let trigger = header.querySelector('button.search, button[aria-label="Rechercher"]');
   if (!trigger) {
@@ -145,7 +147,7 @@
   trigger.addEventListener('click', () => {
     if (!shell.classList.contains('is-open')) open();
   });
-  close.addEventListener('click', closeSearch);
+  close.addEventListener('click', () => window.location.assign(homePage));
   shell.addEventListener('submit', (event) => {
     event.preventDefault();
     const query = input.value.trim();

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CANAL+ — Séries</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="./programme-modal.css" rel="stylesheet" />
+    <link href="./header-search.css" rel="stylesheet" />
+    <style>
+      :root { color-scheme:dark; --bg:#0d0d0d; --pink:#e91c4e; --muted:#8f8f8f; }
+      * { box-sizing:border-box; }
+      body { min-width:320px; margin:0; overflow-x:hidden; background:var(--bg); color:#fff; font-family:Hind,Arial,sans-serif; }
+      :where(a,button,[tabindex]):focus-visible { outline:3px solid #fff; outline-offset:3px; }
+      .topbar { position:relative; z-index:10; height:64px; display:flex; align-items:center; gap:46px; padding:0 42px; border-bottom:2px solid #242424; background:#0b0b0b; }
+      .logo { display:block; flex:none; width:128px; height:32px; }
+      .logo img { display:block; width:100%; height:100%; }
+      .nav { display:flex; gap:42px; font-size:16px; font-weight:600; }
+      .nav a { color:#fff; text-decoration:none; }
+      .tools { display:flex; align-items:center; gap:28px; margin-left:auto; }
+      .search { width:24px; height:24px; padding:0; border:0; background:transparent; color:#fff; cursor:pointer; }
+      .search img { display:block; width:24px; height:24px; }
+      .avatar { width:32px; height:32px; padding:0; border:2px solid #97cbe9; border-radius:50%; background:url('https://thumb.canalplus.pro/bran/unsafe/64x64/filters:quality(85)/image/65de0dc1c69d8/uploads/media/FLAMBEAU_JeromeCommandeur.png') center/cover; cursor:pointer; }
+      main { padding:74px 0 64px 55px; }
+      h1 { margin:0 0 42px; font-size:34px; line-height:1.1; font-weight:600; }
+      .series-strate + .series-strate { margin-top:54px; }
+      .series-strate h2 { margin:0 0 12px; font-size:26px; line-height:32px; }
+      .series-carousel { position:relative; width:calc(100vw - 55px); }
+      .series-rail { display:flex; gap:14px; overflow-x:auto; padding:0 55px 3px 0; scroll-behavior:smooth; scroll-snap-type:x mandatory; scrollbar-width:none; }
+      .series-rail::-webkit-scrollbar { display:none; }
+      .series-feature-card { position:relative; flex:0 0 452.33px; width:452.33px; height:254.43px; overflow:hidden; border-radius:3px; scroll-snap-align:start; background:#181818; }
+      .series-feature-card > img:not(.channel-logo), .series-category-card img, .series-continue-media > img:not(.channel-logo) { display:block; width:100%; height:100%; object-fit:cover; }
+      .channel-logo { position:absolute; z-index:2; left:8px; bottom:7px; width:48px; height:36px; object-fit:contain; }
+      .series-category-card { flex:0 0 163.28px; width:163.28px; height:122.53px; overflow:hidden; border-radius:3px; scroll-snap-align:start; background:#181818; }
+      .series-continue-card { position:relative; flex:0 0 267.4px; width:267.4px; scroll-snap-align:start; color:#fff; cursor:pointer; }
+      .series-continue-media { position:relative; width:267.4px; height:150.41px; overflow:hidden; border-radius:3px; background:#181818; }
+      .series-open { position:absolute; z-index:2; inset:0; width:100%; height:100%; padding:0; border:0; background:transparent; cursor:pointer; }
+      .series-remove { position:absolute; z-index:4; top:6px; right:6px; width:26px; height:26px; display:grid; place-items:center; padding:0; border:0; border-radius:50%; background:#252525e8; color:#fff; font:400 23px/1 Arial,sans-serif; cursor:pointer; }
+      .series-progress { position:absolute; z-index:3; right:4px; bottom:4px; left:4px; height:4px; background:#444; }
+      .series-progress::before { content:""; display:block; width:var(--progress); height:100%; background:#fff; }
+      .series-card-title, .series-card-meta { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+      .series-card-title { margin-top:8px; font-size:18px; line-height:24px; }
+      .series-card-meta { color:var(--muted); font-size:16px; line-height:22px; }
+      .series-arrow { position:absolute; z-index:4; top:50%; right:12px; width:42px; height:54px; padding:0; border:0; border-radius:4px; transform:translateY(-50%); background:#292929e8; color:#fff; font:36px/1 Arial,sans-serif; cursor:pointer; opacity:0; transition:opacity .15s; }
+      .series-carousel:hover .series-arrow, .series-carousel:focus-within .series-arrow { opacity:1; }
+      @media(max-width:850px){.topbar{gap:20px;padding:0 18px}.logo{width:112px;height:28px}.nav{gap:20px;overflow:hidden}.nav a:nth-child(n+3){display:none}main{padding:42px 0 48px 18px}h1{margin-bottom:28px;font-size:30px}.series-carousel{width:calc(100vw - 18px)}.series-rail{padding-right:18px}.series-feature-card{flex-basis:78vw;width:78vw;height:auto;aspect-ratio:16/9}.series-strate+.series-strate{margin-top:38px}.series-arrow{display:none}}
+      @media(prefers-reduced-motion:reduce){.series-rail{scroll-behavior:auto}}
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="./canalplus-home-improved.html" aria-label="CANAL+, accueil"><img src="./canalplus-logo-v2.svg" alt="" /></a>
+      <nav class="nav" aria-label="Navigation principale"><a href="./canalplus-home-improved.html">Accueil</a><a href="./canalplus-live.html">TV en direct</a><a href="./canalplus-channels.html">Chaînes &amp; Apps</a><a href="./canalplus-videos.html">Mes vidéos</a></nav>
+      <div class="tools"><button class="search" type="button" aria-label="Rechercher"><img src="./search-icon.svg" alt="" /></button><button class="avatar" type="button" aria-label="Ouvrir le menu utilisateur"></button></div>
+    </header>
+    <main id="main-content">
+      <h1>Séries</h1>
+      <section class="series-strate" aria-label="Séries à découvrir"><div class="series-carousel"><div class="series-rail" id="series-featured" role="region" aria-label="Carrousel : séries à découvrir" tabindex="0"></div><button class="series-arrow" type="button" aria-label="Séries suivantes">›</button></div></section>
+      <section class="series-strate" aria-label="Catégories de séries"><div class="series-carousel"><div class="series-rail" id="series-categories" role="region" aria-label="Carrousel : catégories de séries" tabindex="0"></div><button class="series-arrow" type="button" aria-label="Catégories suivantes">›</button></div></section>
+      <section class="series-strate" aria-labelledby="series-continue-title"><h2 id="series-continue-title">Continuer la lecture</h2><div class="series-carousel"><div class="series-rail" id="series-continue" role="region" aria-label="Carrousel : continuer la lecture" tabindex="0"></div><button class="series-arrow" type="button" aria-label="Programmes suivants">›</button></div></section>
+    </main>
+    <script src="./series-page.js"></script>
+    <script src="./user-menu.js"></script>
+    <script src="./programme-modal.js"></script>
+    <script src="./header-search.js"></script>
+  </body>
+</html>
