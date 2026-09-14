@@ -5,6 +5,7 @@
     'canalplus-channels.html'
   ]);
   const pageName = window.location.pathname.split('/').pop();
+  const isLoggedOut = pageName.startsWith('canalplus-logged-out');
   if (excludedPages.has(pageName)) return;
 
   const programmeSelector = [
@@ -82,8 +83,10 @@
   const titleElement = modal.querySelector('.detail-title');
   const hero = modal.querySelector('.detail-hero');
   const closeButton = modal.querySelector('.detail-close');
+  const primaryButton = modal.querySelector('.detail-play');
   titleElement.id = 'programme-modal-title';
   titleElement.tabIndex = -1;
+  primaryButton.textContent = isLoggedOut ? "S’ABONNER" : '▶  LECTURE';
 
   let opener = null;
   let inertElements = [];
