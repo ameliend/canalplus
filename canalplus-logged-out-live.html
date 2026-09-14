@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CANAL+ — TV</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Hind:ital,wght@0,400;0,500;0,600;0,700;1,700&display=swap" rel="stylesheet" />
+    <style>
+      :root { color-scheme:dark; --bg:#0d0d0d; --panel:#191919; --line:#282828; --pink:#e52e4d; --muted:#929292; }
+      * { box-sizing:border-box; }
+      html { min-width:320px; background:var(--bg); }
+      body { min-width:320px; margin:0; overflow-x:hidden; background:var(--bg); color:#fff; font-family:'Hind',Arial,sans-serif; }
+      :where(a,button):focus-visible { outline:3px solid #fff; outline-offset:3px; }
+      .topbar { position:relative; z-index:10; width:100%; height:64px; display:flex; align-items:center; gap:44px; padding:0 42px; border-bottom:2px solid var(--line); background:#0b0b0b; }
+      .brand { display:block; flex:none; width:128px; height:32px; }
+      .brand img { display:block; width:100%; height:100%; }
+      .main-nav { display:flex; align-items:center; gap:38px; min-width:0; white-space:nowrap; }
+      .main-nav a { color:#f2f2f2; font-size:16px; font-weight:600; text-decoration:none; }
+      .main-nav a.active { color:var(--pink); }
+      .tools { display:flex; align-items:center; gap:20px; margin-left:auto; }
+      .icon-button { width:32px; height:32px; display:grid; place-items:center; flex:none; padding:0; border:0; background:transparent; color:#fff; cursor:pointer; }
+      .icon-button svg { width:28px; height:28px; }
+      .offers { height:44px; display:inline-flex; align-items:center; padding:0 14px; border-radius:2px; background:var(--pink); color:#fff; font-size:16px; font-style:italic; font-weight:700; text-decoration:none; white-space:nowrap; }
+      .account-trigger { border-radius:50%; }
+      .account-trigger svg { width:34px; height:34px; }
+      .account-menu { position:absolute; z-index:20; top:calc(100% + 8px); right:42px; width:320px; display:none; overflow:hidden; border-radius:7px; background:var(--panel); box-shadow:0 16px 38px rgba(0,0,0,.5); }
+      .account-menu.is-open { display:block; }
+      .account-intro { padding:20px 16px 16px; }
+      .account-title { margin:0 0 8px; font-size:22px; line-height:27px; font-weight:600; }
+      .account-copy { margin:0 0 18px; color:#f0f0f0; font-size:16px; line-height:22px; }
+      .login-link { width:288px; height:50px; display:flex; align-items:center; justify-content:center; border-radius:3px; background:var(--pink); color:#fff; font-size:14px; font-weight:700; text-decoration:none; }
+      .menu-divider { height:1px; background:#303030; }
+      .account-links { display:grid; gap:8px; padding:18px 16px 20px; }
+      .account-link { display:flex; align-items:center; gap:10px; color:#f2f2f2; font-size:16px; line-height:28px; text-decoration:none; }
+      .account-icon { width:26px; height:26px; display:grid; place-items:center; flex:none; border-radius:2px; background:#bed1dc; color:#fff; font:700 15px/1 Arial,sans-serif; }
+      .account-link:nth-child(1) .account-icon { background:#24c9c0; }
+      .account-link:nth-child(2) .account-icon { background:#24bfd6; }
+      .live-main { padding:0 5.5vw 70px; }
+      .live-head { height:86px; display:flex; align-items:center; gap:48px; }
+      .tab { position:relative; padding:0 0 10px; border:0; background:none; color:#aaa; font:700 italic 20px/24px 'Hind',Arial,sans-serif; cursor:pointer; }
+      .tab[aria-selected="true"] { color:#fff; }
+      .tab[aria-selected="true"]::after { content:""; position:absolute; left:0; right:0; bottom:0; height:3px; background:var(--pink); }
+      .schedule { width:187px; height:44px; display:flex; align-items:center; justify-content:center; gap:10px; margin-left:auto; border:0; border-radius:4px; background:#252525; color:#fff; font:700 italic 16px/20px 'Hind',Arial,sans-serif; cursor:pointer; }
+      .schedule svg { width:20px; height:20px; }
+      .program-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:38px 14px; align-items:start; }
+      .program-card { position:relative; width:100%; min-width:0; color:#fff; text-decoration:none; }
+      .card-media { position:relative; width:100%; aspect-ratio:267.4/150.41; overflow:hidden; border-radius:3px; background:#282e38; }
+      .card-media::after { content:""; position:absolute; z-index:1; inset:50% 0 0; background:linear-gradient(transparent,rgba(0,0,0,.42)); pointer-events:none; }
+      .card-image { display:block; width:100%; height:100%; object-fit:cover; }
+      .empty-image { width:100%; height:100%; background:#20242b; }
+      .channel-logo { position:absolute; z-index:2; left:8px; bottom:13px; width:48px; height:36px; object-fit:contain; }
+      .progress { position:absolute; z-index:2; left:5px; right:5px; bottom:5px; height:4px; overflow:hidden; border-radius:3px; background:rgba(255,255,255,.18); }
+      .progress::before { content:""; display:block; width:var(--progress); height:100%; background:var(--pink); }
+      .time { position:absolute; z-index:2; top:5px; right:5px; padding:2px 5px; border-radius:2px; background:rgba(25,25,25,.68); color:#fff; font-size:12px; line-height:18px; }
+      .subscribe { position:absolute; z-index:2; top:5px; right:5px; padding:2px 6px; border-radius:2px; background:var(--pink); color:#fff; font-size:12px; line-height:18px; font-weight:600; }
+      .card-title { display:block; margin-top:8px; padding-right:30px; overflow:hidden; font-size:16px; line-height:21px; text-overflow:ellipsis; white-space:nowrap; }
+      .card-subtitle { display:block; margin-top:2px; padding-right:30px; overflow:hidden; color:var(--muted); font-size:14px; line-height:19px; text-overflow:ellipsis; white-space:nowrap; }
+      .replay { position:absolute; right:0; top:158px; width:24px; height:24px; display:grid; place-items:center; padding:0; border:0; border-radius:2px; background:#282828; color:#fff; cursor:pointer; }
+      .replay svg { width:16px; height:16px; }
+      .discover { margin-top:48px; }
+      .discover h2 { margin:0 0 14px; font-size:26px; line-height:32px; font-weight:700; }
+      @media (max-width:1180px) {
+        .topbar { gap:24px; padding-inline:24px; }
+        .main-nav { gap:24px; overflow:hidden; }
+        .main-nav a:nth-last-child(-n+4) { display:none; }
+        .account-menu { right:24px; }
+        .program-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+      }
+      @media (max-width:760px) {
+        .topbar { height:60px; gap:14px; padding-inline:18px; }
+        .brand { width:112px; height:28px; }
+        .main-nav { display:none; }
+        .tools { gap:12px; }
+        .offers { height:38px; padding-inline:10px; font-size:14px; }
+        .icon-button { width:28px; height:28px; }
+        .account-menu { top:calc(100% + 6px); right:12px; width:min(320px,calc(100vw - 24px)); }
+        .login-link { width:100%; }
+        .live-main { padding:0 18px 48px; }
+        .live-head { height:78px; gap:32px; }
+        .schedule { width:auto; padding-inline:12px; }
+        .program-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+        .program-card,.card-media { width:100%; }
+        .card-media { height:auto; aspect-ratio:16/9; }
+        .replay { top:auto; bottom:0; }
+        .discover h2 { font-size:22px; line-height:28px; }
+      }
+      @media (max-width:420px) {
+        .brand { width:96px; height:24px; }
+        .tools > .icon-button:first-child { display:none; }
+        .offers { padding-inline:8px; font-size:13px; }
+        .schedule span { display:none; }
+        .schedule { width:44px; padding:0; }
+        .program-grid { grid-template-columns:1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./canalplus-logged-out.html" aria-label="CANAL+, retour à Découvrir"><img src="./canalplus-logo-v2.svg" alt="" /></a>
+      <nav class="main-nav" aria-label="Navigation principale">
+        <a href="./canalplus-logged-out.html">Découvrir</a><a class="active" href="./canalplus-logged-out-live.html" aria-current="page">TV</a><a href="./canalplus-logged-out.html#sport">Sport</a><a href="#">Divertissement</a><a href="#">Séries</a><a href="#">Cinéma</a><a href="#">Docs</a><a href="#">Jeunesse</a><a href="#">Chaînes</a><a href="#">CANALVOD</a>
+      </nav>
+      <div class="tools">
+        <button class="icon-button" type="button" aria-label="Rechercher"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10.7 3.1a7.6 7.6 0 1 0 4.65 13.62l4.24 4.24 1.37-1.37-4.24-4.24A7.6 7.6 0 0 0 10.7 3.1Zm0 1.94a5.66 5.66 0 1 1 0 11.32 5.66 5.66 0 0 1 0-11.32Z"/></svg></button>
+        <a class="offers" href="#">NOS OFFRES</a>
+        <button class="icon-button account-trigger" type="button" aria-label="Ouvrir le menu utilisateur" aria-expanded="false" aria-controls="logged-out-menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 4a3.3 3.3 0 1 1 0 6.6A3.3 3.3 0 0 1 12 6Zm0 14a7.96 7.96 0 0 1-6.4-3.2c.9-1.72 2.72-2.9 4.8-2.9h3.2c2.08 0 3.9 1.18 4.8 2.9A7.96 7.96 0 0 1 12 20Z"/></svg></button>
+      </div>
+      <aside class="account-menu" id="logged-out-menu" aria-label="Menu utilisateur" aria-hidden="true">
+        <div class="account-intro"><h2 class="account-title">Compte CANAL+</h2><p class="account-copy">Connectez-vous pour accéder à vos programmes et services</p><a class="login-link" href="./canalplus-login.html">Se connecter</a></div>
+        <div class="menu-divider"></div>
+        <nav class="account-links" aria-label="Services CANAL+"><a class="account-link" href="#"><span class="account-icon" aria-hidden="true">✓</span>Nos offres</a><a class="account-link" href="#"><span class="account-icon" aria-hidden="true">●</span>Espace client</a><a class="account-link" href="#"><span class="account-icon" aria-hidden="true">?</span>Assistance</a><a class="account-link" href="#"><span class="account-icon" aria-hidden="true">☀</span>Fonctionnalités</a><a class="account-link" href="#"><span class="account-icon" aria-hidden="true">◭</span>CANAL+ Responsable</a></nav>
+      </aside>
+    </header>
+    <main class="live-main" id="main-content">
+      <div class="live-head" role="tablist" aria-label="Période de diffusion"><button class="tab" id="now-tab" type="button" role="tab" aria-selected="true" aria-controls="live-grid">MAINTENANT</button><button class="tab" id="evening-tab" type="button" role="tab" aria-selected="false" aria-controls="live-grid">CE SOIR</button><button class="schedule" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/></svg><span>PROGRAMME TV</span></button></div>
+      <section class="program-grid" id="live-grid" role="tabpanel" aria-labelledby="now-tab" aria-live="polite"></section>
+      <section class="discover" aria-labelledby="discover-title"><h2 id="discover-title">Encore plus à découvrir</h2><div class="program-grid" id="discover-grid"></div></section>
+    </main>
+    <script src="./logged-out-live-data.js"></script>
+    <script>
+      const data=window.LOGGED_OUT_LIVE_DATA;
+      const liveGrid=document.querySelector('#live-grid'); const discoverGrid=document.querySelector('#discover-grid'); const tabs=[...document.querySelectorAll('[role="tab"]')];
+      const image=(src,className,alt='')=>{ if(!src){const empty=document.createElement('div');empty.className='empty-image';return empty;} const img=document.createElement('img');img.src=src;img.alt=alt;img.className=className;img.loading='lazy';return img; };
+      const replayIcon='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.7 4.5a.2.2 0 0 0-.2.2v14.6c0 .11.09.2.2.2h2.412a.2.2 0 0 0 .2-.2v-5.894l11.899 5.95a.2.2 0 0 0 .289-.18V4.824a.2.2 0 0 0-.29-.18l-11.897 5.95V4.7a.2.2 0 0 0-.2-.2z"/></svg>';
+      function createCard(item,{discovery=false}={}){
+        const card=document.createElement('article');card.className='program-card';
+        const media=document.createElement('div');media.className='card-media';media.append(image(item.image,'card-image',item.title));
+        if(item.logo){const logo=image(item.logo,'channel-logo',item.logoAlt);logo.width=48;logo.height=36;media.append(logo);}
+        if(item.progress!==null&&item.progress!==undefined){const bar=document.createElement('span');bar.className='progress';bar.style.setProperty('--progress',`${item.progress}%`);bar.setAttribute('role','progressbar');bar.setAttribute('aria-label',`Progression du programme : ${item.progress} %`);bar.setAttribute('aria-valuemin','0');bar.setAttribute('aria-valuemax','100');bar.setAttribute('aria-valuenow',String(item.progress));media.append(bar);}
+        if(item.time){const time=document.createElement('span');time.className='time';time.textContent=item.time;media.append(time);}
+        if(item.label){const label=document.createElement('span');label.className='subscribe';label.setAttribute('role','status');label.textContent=item.label;media.append(label);}
+        const title=document.createElement('span');title.className='card-title';title.textContent=item.title;const subtitle=document.createElement('span');subtitle.className='card-subtitle';subtitle.textContent=item.subtitle||'';
+        const link=document.createElement('a');link.href='#';link.setAttribute('aria-label',`${item.title}${item.subtitle?', '+item.subtitle:''}`);link.style.cssText='color:inherit;text-decoration:none';link.append(media,title,subtitle);card.append(link);
+        if(item.replay&&!discovery){const replay=document.createElement('button');replay.className='replay';replay.type='button';replay.setAttribute('aria-label',`Voir du début ${item.title}`);replay.innerHTML=replayIcon;card.append(replay);}
+        return card;
+      }
+      function render(period){
+        const evening=period==='evening';liveGrid.replaceChildren(...(evening?data.evening:data.now).map(item=>createCard(item)));discoverGrid.replaceChildren(...(evening?data.discoverEvening:data.discoverNow).map(item=>createCard(item,{discovery:true})));
+        tabs.forEach(tab=>tab.setAttribute('aria-selected',String(tab.id===(evening?'evening-tab':'now-tab'))));liveGrid.setAttribute('aria-labelledby',evening?'evening-tab':'now-tab');
+      }
+      tabs.forEach((tab,index)=>{tab.addEventListener('click',()=>render(index?'evening':'now'));tab.addEventListener('keydown',(event)=>{if(!['ArrowLeft','ArrowRight'].includes(event.key))return;event.preventDefault();const next=tabs[index?0:1];next.focus();next.click();});});render('now');
+      const trigger=document.querySelector('.account-trigger');const menu=document.querySelector('.account-menu');const setMenu=open=>{menu.classList.toggle('is-open',open);menu.setAttribute('aria-hidden',String(!open));trigger.setAttribute('aria-expanded',String(open));trigger.setAttribute('aria-label',open?'Fermer le menu utilisateur':'Ouvrir le menu utilisateur');};trigger.addEventListener('click',()=>setMenu(!menu.classList.contains('is-open')));document.addEventListener('pointerdown',event=>{if(menu.classList.contains('is-open')&&!menu.contains(event.target)&&!trigger.contains(event.target))setMenu(false);});document.addEventListener('keydown',event=>{if(event.key==='Escape'&&menu.classList.contains('is-open')){setMenu(false);trigger.focus();}});
+    </script>
+  </body>
+</html>
