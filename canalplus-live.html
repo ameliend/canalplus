@@ -20,8 +20,112 @@
   .evening-grid .live-title { display:block; margin-top:8px; font-size:18px; font-weight:400; line-height:22px; }
   .evening-grid .program-subtitle { display:block; color:#888; font-size:16px; line-height:20px; }
   @media (max-width: 760px) { .evening-grid .channel-logo { left:6px; bottom:6px; } }
+  .now-media { position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; border-radius:3px; background:#171717; }
+  .now-media::after { content:""; position:absolute; z-index:1; inset:50% 0 0; background:linear-gradient(transparent,rgba(0,0,0,.58)); pointer-events:none; }
+  .now-media > .program-image { display:block; width:100%; height:100%; object-fit:cover; }
+  .now-media > .now-channel-logo { position:absolute; z-index:2; left:8px; bottom:14px; width:48px; height:36px; object-fit:contain; border-radius:0; }
+  .now-progress { position:absolute; z-index:2; left:8px; right:8px; bottom:5px; height:4px; overflow:hidden; border-radius:3px; background:rgba(255,255,255,.16); }
+  .now-progress::before { content:""; display:block; width:var(--progress); height:100%; background:var(--pink); }
 </style>
 <script>document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.live-card strong').forEach(el=>{const title=document.createElement('span');title.className='live-title';title.textContent=el.textContent;el.replaceWith(title)});document.querySelector('.nav a:nth-child(3)').href='./canalplus-channels.html';document.querySelector('.nav a:nth-child(4)').href='./canalplus-videos.html'});</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const channels = [
+    { name: "TF1", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/66746746" },
+    { name: "FRANCE 2", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/67032119" },
+    { name: "FRANCE 3", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/67033022" },
+    { name: "CANAL+", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/301/canal-ouah/CHN43FN/CHN43FN_301_29082023" },
+    { name: "FRANCE 5", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/67033026" },
+    { name: "M6", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/313/canal-ouah/CHN43FN/CHN43FN_M6_20220415" },
+    { name: "ARTE", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/3932761" },
+    { name: "CANAL+ SPORT 360", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/83/canal-ouah/CHN43FN/CHN43FN_83_29082023" },
+    { name: "CANAL+ FOOT", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/19/canal-ouah/CHN43FN/CHN43FN_19_29082023" },
+    { name: "CANAL+ SPORT", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/177/canal-ouah/CHN43FN/CHN43FN_177_29082023" },
+    { name: "CANAL+ BOX OFFICE", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/1074/canal-ouah/CHN43FN/CHN43FN_1074_29082023" },
+    { name: "CANAL+ GRAND ECRAN", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/900/canal-ouah/CHN43FN/CHN43FN_900_29082023" },
+    { name: "CANAL+ CINEMA(S)", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/198/canal-ouah/CHN43FN/CHN43FN_198_29082023" },
+    { name: "CANAL+ DOCS", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/899/canal-ouah/CHN43FN/CHN43FN_899_29082023" },
+    { name: "CANAL+ KIDS", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/259/canal-ouah/CHN43FN/CHN43FN_259_29082023" },
+    { name: "CHAINE EVENEMENT", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/289/canal-ouah/CHN43FN/CHN43FN_289_20190201" },
+    { name: "OCS", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/322/canal-ouah/CHN43FN/CHN43FN_322_20240703-lyaw" },
+    { name: "CINE+ FRISSON", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/398/canal-ouah/CHN43FN/CHN43FN_398_20240703--MGY" },
+    { name: "CINE+ EMOTION", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/396/canal-ouah/CHN43FN/CHN43FN_396_20240703-ziX9" },
+    { name: "CINE+ FAMILY", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/533/canal-ouah/CHN43FN/CHN43FN_533_20240703-hEX8" },
+    { name: "CINE+ FESTIVAL", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/532/canal-ouah/CHN43FN/CHN43FN_532_20240703-kAx_" },
+    { name: "CINE+ CLASSIC", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/531/canal-ouah/CHN43FN/CHN43FN_531_20240703-2TQN" },
+    { name: "ACTION", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/20482797" },
+    { name: "TCM CINEMA", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/374/canal-ouah/CHN43FN/CHN43FN_374_20240611-hjHG" },
+    { name: "POLAR+", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/61718410" },
+    { name: "SERIE CLUB", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/19132964" },
+    { name: "WARNER TV", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/694/canal-ouah/CHN43FN/CHN43FN_694_20240611-j9xY" },
+    { name: "RTL9", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/50052/canal-ouah/CHN43FN/RTL9_chn43fn" },
+    { name: "AB1", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/611/canal-ouah/CHN43FN/AB1_BLANC_640x480-Fza-" },
+    { name: "NOVELAS+", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/693/canal-ouah/CHN43FN/CHN43FN_693_20260701-tl9g" },
+    { name: "TF1 SERIES FILMS", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/526/canal-ouah/CHN43FN/CHN43FN_526_20251024--y7o" },
+    { name: "INFOSPORT+", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/37032867" },
+    { name: "BEIN SPORTS 1", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/48981173" },
+    { name: "BEIN SPORTS 2", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/48981183" },
+    { name: "BEIN SPORTS 3", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/48981545" },
+    { name: "EUROSPORT 1", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/101/canal-ouah/CHN43FN/CHN43FN_101_20220110" },
+    { name: "EUROSPORT 2", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/436/canal-ouah/CHN43FN/CHN43FN_436_20220110" },
+    { name: "GOLF+", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/2953272" },
+    { name: "AUTOMOTO LA CHAINE", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/79159708" },
+    { name: "EQUIDIA", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/66127994" },
+    { name: "SPORT EN FRANCE", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/1080/canal-ouah/CHN43FN/CHN43FN_1080_20240206-go3d" },
+    { name: "CHEVAL TV", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/1182/canal-ouah/CHN43FN/CHN43FN_1182_20251013-QVcu" },
+    { name: "L'EQUIPE", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/44863403" },
+    { name: "COMEDIE+", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/21549672" },
+    { name: "PARIS PREMIERE", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/294/canal-ouah/CHN43FN/CHN43FN__Paris_Premiere_20220415" },
+    { name: "TEVA", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/292/canal-ouah/CHN43FN/CHN43FN_292_20211002" },
+    { name: "TLC", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/1097/canal-ouah/CHN43FN/CHN43FN_1097_20240611-7qUQ" },
+    { name: "W9", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/296/canal-ouah/CHN43FN/CHN43FN_W9_20220415" },
+    { name: "TMC", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/66747568" },
+    { name: "TFX", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/66747551" },
+    { name: "CSTAR", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/64699011" },
+    { name: "T18", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/1167/canal-ouah/CHN43FN/CHN43FN_1167_20250606-oUVi" },
+    { name: "NOVO19", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/1168/canal-ouah/CHN43FN/CHN43FN_1168_20250901-8-M2" },
+    { name: "6TER", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/521/canal-ouah/CHN43FN/CHN43FN_6TER_20220415" },
+    { name: "RMC STORY", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/571/canal-ouah/CHN43FN/CHN43FN_571_20251217-pHg9" },
+    { name: "RMC LIFE", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/440/canal-ouah/CHN43FN/CHN43FN_440_20251217-5Jlb" },
+    { name: "TV5 MONDE", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/channel/520/canal-ouah/CHN43FN/CHN43FN_520_20251008-YfN8" },
+    { name: "PLANETE+", src: "https://thumb.canalplus.pro/http/unsafe/101x76/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/4492627" }
+  ];
+
+  const nowCards = [...document.querySelector('.grid').querySelectorAll(':scope > .live-card')];
+  nowCards.slice(1).forEach((card, index) => {
+    const channel = channels[index];
+    const image = card.querySelector(':scope > img');
+    if (!channel || !image) return;
+
+    const media = document.createElement('div');
+    media.className = 'now-media';
+    image.classList.add('program-image');
+    image.before(media);
+    media.append(image);
+
+    const logo = document.createElement('img');
+    logo.className = 'now-channel-logo';
+    logo.src = channel.src;
+    logo.alt = channel.name;
+    logo.width = 48;
+    logo.height = 36;
+    logo.loading = 'lazy';
+
+    const seed = [...image.src].reduce((value, character) => ((value * 31) + character.charCodeAt(0)) >>> 0, index + 1);
+    const progressValue = 8 + (seed % 85);
+    const progress = document.createElement('span');
+    progress.className = 'now-progress';
+    progress.style.setProperty('--progress', `${progressValue}%`);
+    progress.setAttribute('role', 'progressbar');
+    progress.setAttribute('aria-label', `Progression du programme : ${progressValue} %`);
+    progress.setAttribute('aria-valuemin', '0');
+    progress.setAttribute('aria-valuemax', '100');
+    progress.setAttribute('aria-valuenow', String(progressValue));
+
+    media.append(logo, progress);
+  });
+});
+</script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const sharedMenuScript = document.createElement('script');
