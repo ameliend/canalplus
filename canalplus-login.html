@@ -79,9 +79,15 @@
     </main>
     <script>
       const password = document.querySelector('#password');
+      const identifier = document.querySelector('#identifier');
       const toggle = document.querySelector('.password-toggle');
       const loginForm = document.querySelector('#login-form');
       const submit = document.querySelector('.submit');
+      const passwordAlphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789';
+      const passwordBytes = crypto.getRandomValues(new Uint8Array(12));
+      identifier.value = 'test@gmail.com';
+      password.value = [...passwordBytes].map((value) => passwordAlphabet[value % passwordAlphabet.length]).join('');
+      submit.disabled = !loginForm.checkValidity();
       toggle.addEventListener('click', () => {
         const shown = password.type === 'text';
         password.type = shown ? 'password' : 'text';
