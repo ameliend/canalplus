@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CANAL+ — Cinéma</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root { color-scheme:dark; --bg:#0d0d0d; --panel:#0b0b0b; --line:#242424; --pink:#e91c4e; --page-pad:5.5vw; }
+      * { box-sizing:border-box; }
+      html { background:var(--bg); }
+      body { min-width:320px; margin:0; overflow-x:hidden; background:var(--bg); color:#fff; font-family:'Hind',Arial,sans-serif; }
+      .topbar { position:relative; width:100%; height:64px; display:flex; align-items:center; gap:46px; padding:0 42px; border-bottom:2px solid var(--line); background:var(--panel); }
+      .logo { display:block; flex:none; width:128px; height:32px; }
+      .logo img { display:block; width:100%; height:100%; }
+      nav { display:flex; align-items:center; gap:42px; font-size:16px; font-weight:600; white-space:nowrap; }
+      nav a { color:#f1f1f1; text-decoration:none; }
+      nav a.active { color:var(--pink); }
+      .tools { display:flex; align-items:center; gap:28px; margin-left:auto; }
+      .search { width:24px; height:24px; padding:0; border:0; background:transparent; color:#fff; cursor:pointer; }
+      .search img { display:block; width:24px; height:24px; }
+      .avatar { width:32px; height:32px; padding:0; border:2px solid #97cbe9; border-radius:50%; background:#111 url('https://thumb.canalplus.pro/bran/unsafe/64x64/filters:quality(85)/image/65de0dc1c69d8/uploads/media/FLAMBEAU_JeromeCommandeur.png') center/cover no-repeat; cursor:pointer; }
+      main { padding:74px 0 0 var(--page-pad); }
+      h1 { margin:0 0 42px; font-size:34px; line-height:1.1; font-weight:600; }
+      h2 { margin:0 0 12px; font-size:26px; line-height:1.25; font-weight:600; }
+      .row-section { margin-top:64px; }
+      .row-section:first-of-type { margin-top:0; }
+      .carousel { position:relative; width:calc(100vw - var(--page-pad)); }
+      .rail { display:flex; gap:14px; margin:0; padding:0 var(--page-pad) 4px 0; overflow-x:auto; overscroll-behavior-inline:contain; scroll-behavior:smooth; scroll-snap-type:x mandatory; scrollbar-width:none; list-style:none; }
+      .rail::-webkit-scrollbar { display:none; }
+      .card { display:block; flex:none; overflow:hidden; border-radius:3px; background:#181818; scroll-snap-align:start; text-decoration:none; }
+      .card img { display:block; width:100%; height:100%; object-fit:cover; }
+      .featured-card { width:452.33px; height:254.43px; }
+      .category-card { width:163.28px; height:122.53px; }
+      .poster-card { width:188.14px; height:250.85px; }
+      .carousel-button { position:absolute; z-index:4; top:50%; width:54px; height:58px; border:0; border-radius:7px; transform:translateY(-50%); background:#292929e8; color:#fff; font:400 42px/1 Arial,sans-serif; cursor:pointer; opacity:0; transition:opacity .18s,background .18s; }
+      .carousel:hover .carousel-button,.carousel:focus-within .carousel-button { opacity:1; }
+      .carousel-button:hover { background:#3a3a3af5; }
+      .carousel-button.prev { left:12px; }
+      .carousel-button.next { right:calc(var(--page-pad) + 12px); }
+      .carousel-button:disabled { opacity:0 !important; pointer-events:none; }
+      :where(a,button,[tabindex]):focus-visible { outline:3px solid #fff; outline-offset:4px; }
+      .carousel-button:focus-visible { outline-color:var(--pink); outline-offset:2px; opacity:1; }
+      .feature-banner { position:relative; width:100vw; max-width:1497px; height:auto; aspect-ratio:1497/561.38; margin:70px 0 0 calc(var(--page-pad) * -1); overflow:hidden; background:#111 url('https://thumb.canalplus.pro/bran/unsafe/2496x936/filters:quality(55)/image/6a8c4c0c5544e/uploads/media/BANNER_WEB_1920x720_SEPTEMBRE_FIXE.png') center/cover no-repeat; }
+      .trailer-button { position:absolute; left:var(--page-pad); bottom:54px; width:274.17px; height:50px; display:inline-flex; align-items:center; justify-content:center; border-radius:5px; background:var(--pink); color:#fff; font-size:18px; font-style:italic; font-weight:700; text-decoration:none; }
+      @media (max-width:850px) {
+        :root { --page-pad:20px; }
+        .topbar { gap:20px; padding:0 18px; }
+        .logo { width:112px; height:28px; }
+        nav { gap:20px; overflow:hidden; }
+        nav a:nth-child(n+3) { display:none; }
+        .tools { gap:16px; }
+        main { padding-top:42px; }
+        h1 { margin-bottom:28px; font-size:30px; }
+        h2 { font-size:24px; }
+        .row-section { margin-top:46px; }
+        .featured-card { width:84vw; height:auto; aspect-ratio:16/9; }
+        .category-card { width:44vw; height:auto; aspect-ratio:4/3; }
+        .poster-card { width:42vw; height:auto; aspect-ratio:3/4; }
+        .carousel-button { display:none; }
+        .feature-banner { margin-top:54px; min-height:260px; }
+        .trailer-button { bottom:28px; width:min(274.17px,calc(100% - 40px)); }
+      }
+      @media (prefers-reduced-motion:reduce) { .rail { scroll-behavior:auto; } }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="logo" href="./canalplus-home-improved.html" aria-label="CANAL+, accueil"><img src="./canalplus-logo-v2.svg" alt="" /></a>
+      <nav aria-label="Navigation principale"><a href="./canalplus-home-improved.html">Accueil</a><a href="./canalplus-live.html">TV en direct</a><a href="./canalplus-channels.html">Chaînes &amp; Apps</a><a href="./canalplus-videos.html">Mes vidéos</a></nav>
+      <div class="tools"><button class="search" type="button" aria-label="Rechercher"><img src="./search-icon.svg" alt="" /></button><button class="avatar" type="button" aria-label="Ouvrir le menu utilisateur"></button></div>
+    </header>
+    <main>
+      <h1>Cinéma</h1>
+      <section class="row-section" aria-label="À découvrir"><div class="carousel"><ul class="rail" id="featured"></ul><button class="carousel-button prev" type="button" aria-label="Contenus précédents">‹</button><button class="carousel-button next" type="button" aria-label="Contenus suivants">›</button></div></section>
+      <section class="row-section" aria-label="Catégories cinéma"><div class="carousel"><ul class="rail" id="categories"></ul><button class="carousel-button prev" type="button" aria-label="Catégories précédentes">‹</button><button class="carousel-button next" type="button" aria-label="Catégories suivantes">›</button></div></section>
+      <section class="row-section" aria-labelledby="top-title"><h2 id="top-title">Le très haut de l’affiche</h2><div class="carousel"><ul class="rail" id="top"></ul><button class="carousel-button prev" type="button" aria-label="Films précédents">‹</button><button class="carousel-button next" type="button" aria-label="Films suivants">›</button></div></section>
+      <section class="row-section" aria-labelledby="essentials-title"><h2 id="essentials-title">Les incontournables du moment</h2><div class="carousel"><ul class="rail" id="essentials"></ul><button class="carousel-button prev" type="button" aria-label="Films précédents">‹</button><button class="carousel-button next" type="button" aria-label="Films suivants">›</button></div></section>
+      <div class="feature-banner" role="img" aria-label="Sélection cinéma CANAL+ de septembre"><a class="trailer-button" href="#">VOIR LA BANDE-ANNONCE</a></div>
+    </main>
+    <script>
+      const collections = {"featured": [{"label": "Gérald le Conquérant, Film Comédie, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/460x259/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/30815346/canal-ouah_50001/STD169LT/myCANAL_16x9_Logotype_MEA_1920x1080-pxQU"}, {"label": "Super Charlie, Film Animation, Sur CINE+OCS", "image": "https://thumb.canalplus.pro/http/unsafe/460x259/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/31313982/canal-ouah_50002/STD169LT/myCANAL_16x9_Logotype_MEA_1920x1080-rijV"}, {"label": "Deauville Festival du Film américain", "image": "https://thumb.canalplus.pro/bran/unsafe/460x259/filters:quality(55)/image/6a5796f22b7b5/uploads/media/myCANAL_16x9_Logotype_MEA_1920x1080.jpg"}, {"label": "Twisted, Film Horreur, Sur Paramount+", "image": "https://thumb.canalplus.pro/http/unsafe/460x259/filters:quality(55)/media.prod.hawc.canal.aws.io-cplus.net/c22358d22e814ddab2269b1a767612a2.jpg"}, {"label": "Dix pour cent", "image": "https://thumb.canalplus.pro/bran/unsafe/460x259/filters:quality(55)/image/6a9fe38b3eddc/uploads/media/myCANAL_16x9_Logotype_MEA_1920x1080_48.jpg"}, {"label": "La Disparition de Josef Mengele, Film Drame, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/460x259/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/30508484/canal-ouah_50001/STD169LT/myCANAL_16x9_Logotype_MEA_1920x1080-nGNr"}, {"label": "L'affaire Bojarski, Film Drame, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/460x259/filters:quality(55):watermark(canalplus-cdn.canal-plus.io/p1/editoLabelTag/-localized0/canal-ouah/STD169FN/myCANAL_16x9_Logotype_Info_MEA_1920x1080_Box_Office_blanc-YFse,0,0,0,100,100)/canalplus-cdn.canal-plus.io/p1/unit/31072813/canal-ouah_50001/STD169LT/myCANAL_16x9_Logotype_MEA_1920x1080-GSoU"}, {"label": "La cité interdite, Film Suspense, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/460x259/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/32023657/canal-ouah_50001/STD169LT/myCANAL_16x9_Logotype_MEA_1920x1080-dvh_"}, {"label": "La Femme de ménage, Film Suspense, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/460x259/filters:quality(55):watermark(canalplus-cdn.canal-plus.io/p1/editoLabelTag/-localized0/canal-ouah/STD169FN/myCANAL_16x9_Logotype_Info_MEA_1920x1080_Box_Office_blanc-YFse,0,0,0,100,100)/canalplus-cdn.canal-plus.io/p1/unit/30970202/canal-ouah_50001/STD169LT/myCANAL_16x9_Logotype_MEA_1920x1080-dvM6"}, {"label": "32e édition de l'Etrange Festival", "image": "https://thumb.canalplus.pro/bran/unsafe/460x259/filters:quality(55)/image/6a8dae7b8f2fb/uploads/media/myCANAL_16x9_Logotype_MEA_1920x1080_18.jpg"}, {"label": "La Tour de glace, Film Drame, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/460x259/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/30103893/canal-ouah_50001/STD169LT/myCANAL_16x9_Logotype_MEA_1920x1080--qWe"}, {"label": "Mission : Impossible - The Final Reckoning, Film Action, Sur CINE+OCS", "image": "https://thumb.canalplus.pro/http/unsafe/460x259/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/29356120/canal-ouah_50002/STD169LT/myCANAL_16x9_Logotype_MEA_1920x10801-fycM"}, {"label": "Mayday, Film Action, Sur Apple TV", "image": "https://thumb.canalplus.pro/http/unsafe/460x259/filters:quality(55)/media.prod.hawc.canal.aws.io-cplus.net/1129c62bd2e8fa75702c82ae85367b71.jpg"}, {"label": "Libre échange, Film Comédie romantique, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/460x259/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/30437491/canal-ouah_50001/STD169LT/myCANAL_16x9_Logotype_MEA_1920x1080-T8JO"}, {"label": "Urban Myths, Film Horreur, Sur Insomnia", "image": "https://thumb.canalplus.pro/http/unsafe/460x259/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/32116051/canal-ouah_50780/STD169LT/mediawan-2025-01226-image-fr-urbanmyths_16_9-0REa"}, {"label": "Rue Málaga, Film Comédie dramatique, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/460x259/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/31147926/canal-ouah_50001/STD169LT/myCANAL_16x9_Logotype_MEA_1920x1080-geZy"}], "categories": [{"label": "Tous les films", "image": "https://thumb.canalplus.pro/http/unsafe/137x103/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/93733310"}, {"label": "Pour vous", "image": "https://thumb.canalplus.pro/bran/unsafe/137x103/filters:quality(55)/image/6a59faaa8ff15/uploads/media/TUILES_4x3_1440x1080_pour_vous.jpg"}, {"label": "Le cinéma de CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/137x103/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/93733302"}, {"label": "Comédie", "image": "https://thumb.canalplus.pro/http/unsafe/137x103/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/93733303"}, {"label": "Action", "image": "https://thumb.canalplus.pro/http/unsafe/137x103/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/93733317"}, {"label": "Fantastique", "image": "https://thumb.canalplus.pro/http/unsafe/137x103/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/93733324"}, {"label": "Émotion", "image": "https://thumb.canalplus.pro/http/unsafe/137x103/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/93733304"}, {"label": "Les cultes", "image": "https://thumb.canalplus.pro/bran/unsafe/137x103/filters:quality(55)/image/5fb3da55ed48f/uploads/media/13-les-cultes.68040.jpg"}, {"label": "Policier", "image": "https://thumb.canalplus.pro/http/unsafe/137x103/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/93733307"}, {"label": "Suspense", "image": "https://thumb.canalplus.pro/http/unsafe/137x103/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/93733320"}, {"label": "Horreur", "image": "https://thumb.canalplus.pro/http/unsafe/137x103/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/93733842"}, {"label": "Jeunesse", "image": "https://thumb.canalplus.pro/http/unsafe/137x103/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/93733301"}, {"label": "Téléfilms", "image": "https://thumb.canalplus.pro/http/unsafe/137x103/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/93733313"}, {"label": "Docs-Mags", "image": "https://thumb.canalplus.pro/http/unsafe/137x103/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/93733322"}, {"label": "Court Métrage", "image": "https://thumb.canalplus.pro/http/unsafe/137x103/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/93733305"}], "top": [{"label": "La Femme de ménage, Film Suspense, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/30970202/canal-ouah_50001/JAQCANAL/myCANAL_Jaquette_MEA_600x800-5PhT"}, {"label": "Mayday, Film Action, Sur Apple TV", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/media.prod.hawc.canal.aws.io-cplus.net/d4a17ce521bf7259a27571bf2d75a313.jpg"}, {"label": "Le Mage du Kremlin, Film Suspense, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/30974969/canal-ouah_50001/JAQCANAL/myCANAL_Jaquette_MEA_600x800-3Dqq"}, {"label": "Greenland : Migration, Film Action, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/31203425/canal-ouah_50001/JAQCANAL/myCANAL_Jaquette_MEA_600x800-bNb1"}, {"label": "Libre échange, Film Comédie romantique, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/122043568"}, {"label": "Smashing Machine, Film biopic, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/30932859/canal-ouah_50001/JAQCANAL/myCANAL_Jaquette_MEA_600x800-XROj"}, {"label": "L'Infiltrée, Film Comédie, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/31330818/canal-ouah_50001/JAQCANAL/myCANAL_Jaquette_MEA_600x800-XG7Q"}, {"label": "Continental Split, Film Action, Sur RMC STORY", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/120745668"}, {"label": "Goat - rêver plus haut, Film Animation, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/31141919/canal-ouah_50001/JAQCANAL/myCANAL_Jaquette_MEA_600x800-lP60"}, {"label": "La bonne étoile, Film Comédie dramatique, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/30688156/canal-ouah_50001/JAQCANAL/myCANAL_Jaquette_MEA_600x800-iFBU"}, {"label": "Eddington, Film Comédie, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/30103888/canal-ouah_50001/JAQCANAL/myCANAL_Jaquette_MEA_600x800-Ceco"}, {"label": "Rue Málaga, Film Comédie dramatique, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/31147926/canal-ouah_50001/JAQCANAL/myCANAL_Jaquette_MEA_600x800-QJxi"}, {"label": "Not Without Hope, Film Drame, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/31997138/canal-ouah_50001/JAQCANAL/myCANAL_Jaquette_MEA_600x800.jpg80-c7dv"}, {"label": "Father Mother Sister Brother, Film Comédie dramatique, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/31282431/canal-ouah_50001/JAQCANAL/myCANAL_Jaquette_MEA_600x800-_u2Z"}], "essentials": [{"label": "Point Break, extrême limite, Film Action, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/361726/canal-ouah_50001/JAQCANAL/104344_0052-nn6J"}, {"label": "Ce que le jour doit à la nuit, Film Drame, Sur Paramount+", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/plmws/images.media-press.cloud/06de/06de6318870f4e2cba5e59d39252777e"}, {"label": "Le loup de Wall Street, Film Comédie dramatique, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/5614476/canal-ouah_50001/JAQCANAL/myCANAL_Jaquette_MEA_600x8001-5LgH"}, {"label": "Greenland, le dernier refuge, Film Action, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/14460064/canal-ouah_50001/JAQCANAL/image10-fusZ"}, {"label": "The Batman, Film Action, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/18708416/canal-ouah_50001/JAQCANAL/1266013_0022-X5n4"}, {"label": "L'amant double, Film Suspense, Sur arte", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/117522467"}, {"label": "Harry Potter à l'école des sorciers, Film Fantastique, Sur HBO MAX", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/40438941/canal-ouah/JAQCANAL/HP1_25YearsofMagic_2026_JAQCANAL_PUR-tileburnedin_LAN-fr-FR_600x800_SCRID-18960216--18918583-OvL_"}, {"label": "La chute de la Maison Blanche, Film Action, Sur M6", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/123989821"}, {"label": "Harry Potter et la chambre des secrets, Film Fantastique, Sur HBO MAX", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/40439261/canal-ouah_50889/JAQCANAL/78508-jX09"}, {"label": "Les gamins, Film Comédie, Sur CANAL+", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/2329165/canal-ouah_50001/JAQCANAL/myCANAL_Jaquette_MEA_600x800-552N"}, {"label": "Harry Potter et le Prisonnier d'Azkaban, Film Fantastique, Sur HBO MAX", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/40439243/canal-ouah_50889/JAQCANAL/80830-Vvod"}, {"label": "Harry Potter et la coupe de feu, Film Fantastique, Sur HBO MAX", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/40439245/canal-ouah_50889/JAQCANAL/78538-gJG4"}, {"label": "11 septembre, Film Action, Sur NOVO19", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/media.prod.hawc.canal.aws.io-cplus.net/f21ed0f8d2c2b704b932eb5540184fb3.jpg"}, {"label": "Harry Potter et l'ordre du Phénix, Film Fantastique, Sur HBO MAX", "image": "https://thumb.canalplus.pro/http/unsafe/180x240/filters:quality(55)/canalplus-cdn.canal-plus.io/p1/unit/40442021/canal-ouah_50889/JAQCANAL/80505-tyNj"}]};
+      const configurations = { featured:'featured-card', categories:'category-card', top:'poster-card', essentials:'poster-card' };
+      Object.entries(configurations).forEach(([id,className]) => {
+        const rail = document.querySelector(`#${id}`);
+        collections[id].forEach((item,index) => {
+          const entry = document.createElement('li');
+          const link = document.createElement('a');
+          const image = document.createElement('img');
+          link.className = `card ${className}`;
+          link.href = '#';
+          link.setAttribute('aria-label', item.label);
+          image.src = item.image;
+          image.alt = '';
+          image.loading = index < 4 ? 'eager' : 'lazy';
+          image.decoding = 'async';
+          link.append(image);
+          entry.append(link);
+          rail.append(entry);
+        });
+      });
+      document.querySelectorAll('a[href="#"]').forEach(link => link.addEventListener('click', event => event.preventDefault()));
+      document.querySelectorAll('.carousel').forEach(carousel => {
+        const rail = carousel.querySelector('.rail');
+        const previous = carousel.querySelector('.prev');
+        const next = carousel.querySelector('.next');
+        const update = () => {
+          previous.disabled = rail.scrollLeft <= 3;
+          next.disabled = rail.scrollLeft >= rail.scrollWidth - rail.clientWidth - 3;
+        };
+        const move = direction => {
+          const card = rail.querySelector('.card');
+          const distance = card ? card.getBoundingClientRect().width + 14 : rail.clientWidth * .8;
+          rail.scrollBy({ left:direction * distance, behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+        };
+        previous.addEventListener('click', () => move(-1));
+        next.addEventListener('click', () => move(1));
+        rail.addEventListener('scroll', update, { passive:true });
+        new ResizeObserver(update).observe(rail);
+        update();
+      });
+    </script>
+    <script src="./user-menu.js"></script>
+  </body>
+</html>
