@@ -130,6 +130,11 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
   const sharedMenuScript = document.createElement('script');
   sharedMenuScript.src = './user-menu.js';
+  sharedMenuScript.addEventListener('load', () => {
+    const searchScript = document.createElement('script');
+    searchScript.src = './header-search.js';
+    document.body.append(searchScript);
+  });
   document.body.append(sharedMenuScript);
   const programs = [
     ["Qui sera le plus nul ?", "Partie 1", "https://thumb.canalplus.pro/http/unsafe/254x143/filters:quality(55)/media.prod.hawc.canal.aws.io-cplus.net/d04554649b48252964c2122bb3b3ceab.jpg", "TF1", "https://thumb.canalplus.pro/http/unsafe/48x36/filters:quality(55)/img-hapi.canalplus.pro:80/ServiceImage/ImageID/66746746", 18],

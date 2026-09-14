@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="./programme-modal.css" rel="stylesheet" />
+    <link href="./header-search.css" rel="stylesheet" />
     <style>
       :root { color-scheme:dark; --bg:#0d0d0d; --panel:#0b0b0b; --line:#242424; --pink:#e91c4e; --page-pad:5.5vw; }
       * { box-sizing:border-box; }
@@ -91,6 +93,8 @@
           const image = document.createElement('img');
           link.className = `card ${className}`;
           link.href = '#';
+          link.dataset.programmeTitle = item.label.split(/, (?:Film|Série|Sur )/)[0];
+          link.dataset.programmeImage = item.image;
           link.setAttribute('aria-label', item.label);
           image.src = item.image;
           image.alt = '';
@@ -123,5 +127,7 @@
       });
     </script>
     <script src="./user-menu.js"></script>
+    <script src="./programme-modal.js"></script>
+    <script src="./header-search.js"></script>
   </body>
 </html>
