@@ -1,0 +1,180 @@
+@media (max-width: 760px) {
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  :where(header.topbar, header.top) {
+    position: relative;
+    height: 128px !important;
+    min-height: 128px;
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: 50px 58px;
+    grid-template-areas:
+      "brand tools"
+      "navigation navigation";
+    align-items: center;
+    gap: 0 12px !important;
+    padding: 12px 18px 0 !important;
+    border-bottom: 2px solid #242424;
+    background: #0b0b0b;
+  }
+
+  :where(header.topbar, header.top) > :is(.logo, .brand, a:has(> img.logo)) {
+    grid-area: brand;
+    width: 112px !important;
+    height: 28px !important;
+  }
+
+  :where(header.topbar, header.top) > :is(.logo, .brand, a:has(> img.logo)) img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  :where(header.topbar, header.top) > nav {
+    grid-area: navigation;
+    width: calc(100vw - 36px);
+    display: flex !important;
+    gap: 24px !important;
+    align-self: stretch;
+    align-items: center;
+    overflow-x: auto !important;
+    overflow-y: hidden;
+    font-size: 16px !important;
+    scrollbar-width: none;
+    white-space: nowrap;
+  }
+
+  :where(header.topbar, header.top) > nav::-webkit-scrollbar { display: none; }
+  :where(header.topbar, header.top) > nav a { display: block !important; flex: none; }
+
+  :where(header.topbar, header.top) > .tools {
+    grid-area: tools;
+    justify-self: end;
+    margin-left: 0 !important;
+  }
+
+  .header-search {
+    position: relative;
+    top: auto;
+    right: auto !important;
+    transform: none;
+  }
+
+  .header-search.is-open {
+    position: absolute;
+    top: 15px;
+    right: 18px !important;
+    left: 18px;
+    width: auto;
+  }
+
+  header.is-searching > nav { visibility: hidden; }
+
+  /* Accueil connecté : une mise en avant, trois univers et deux contenus. */
+  .page-connected-home main { padding-top: 48px; }
+  .page-connected-home .poster {
+    flex-basis: calc(100vw - 36px);
+    width: calc(100vw - 36px);
+  }
+  .page-connected-home .chip {
+    flex-basis: calc((100vw - 52px) / 3);
+    width: calc((100vw - 52px) / 3);
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+  .page-connected-home :is(.continue-card, .playlist-card, .series-card) {
+    flex-basis: calc((100vw - 48px) / 2);
+    width: calc((100vw - 48px) / 2);
+  }
+  .page-connected-home :is(.playlist-card img, .series-card) {
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+  .page-connected-home .cinema-card {
+    flex-basis: calc((100vw - 48px) / 2);
+    width: calc((100vw - 48px) / 2);
+  }
+
+  /* Accueil non connecté : les grandes strates occupent toute la largeur. */
+  .page-logged-out-home main { padding: 64px 0 48px 18px; }
+  .page-logged-out-home .hero-card,
+  .page-logged-out-home .sport-card {
+    flex-basis: calc(100vw - 36px);
+    width: calc(100vw - 36px);
+  }
+  .page-logged-out-home .sport-poster {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+  .page-logged-out-home .summary-card {
+    flex-basis: calc((100vw - 48px) / 2);
+    width: calc((100vw - 48px) / 2);
+  }
+
+  /* TV : deux programmes par ligne, conformément aux vues mobile. */
+  .page-connected-live .filters { display: none; }
+  .page-connected-live .live-head,
+  .page-logged-out-live .live-head { padding-inline: 18px; }
+  .page-connected-live .grid,
+  .page-logged-out-live .program-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 34px 12px;
+  }
+  .page-connected-live .grid { padding: 18px !important; }
+  .page-connected-live .live-card,
+  .page-connected-live .live-card img { width: 100%; }
+  .page-logged-out-live .schedule span { display: none; }
+  .page-logged-out-live .schedule { width: 44px; padding: 0; }
+
+  /* Chaînes & Apps : trois tuiles par ligne. */
+  .page-channels main { padding: 50px 18px 60px; }
+  .page-channels .channel-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 12px 6px;
+  }
+  .page-channels .channel-card,
+  .page-channels .channel-card img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Mes vidéos et résultats de recherche : deux cartes par ligne. */
+  .page-videos .video-grid,
+  .search-results-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  /* Cinéma et Séries : 1 mise en avant, 3 catégories, 2 contenus. */
+  .page-cinema .featured-card,
+  .page-series .series-feature-card {
+    width: calc(100vw - 40px);
+    flex-basis: calc(100vw - 40px);
+  }
+  .page-cinema .category-card,
+  .page-series .series-category-card {
+    width: calc((100vw - 56px) / 3);
+    flex-basis: calc((100vw - 56px) / 3);
+  }
+  .page-cinema .poster-card,
+  .page-series .series-continue-card {
+    width: calc((100vw - 54px) / 2);
+    flex-basis: calc((100vw - 54px) / 2);
+  }
+  .page-series .series-continue-media {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (max-width: 420px) {
+  .page-logged-out-live .program-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
