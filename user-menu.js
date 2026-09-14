@@ -42,5 +42,5 @@
   avatar.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); avatar.click(); } });
   document.addEventListener('pointerdown', (event) => { if (menu.classList.contains('is-open') && !menu.contains(event.target) && !avatar.contains(event.target)) setOpen(false); });
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setOpen(false); });
-  menu.querySelector('.logout').addEventListener('click', () => window.location.assign('./canalplus-home-improved.html'));
+  menu.querySelector('.logout').addEventListener('click', () => window.location.assign('./canalplus-logged-out.html'));
 })();
