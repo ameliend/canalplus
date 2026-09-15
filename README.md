@@ -15,13 +15,25 @@ Open the cloned repository as a project in Codex. The rules in `AGENTS.md` then 
 
 ## Open the current prototype
 
-From the repository root, start a local server:
+From the repository root, start the AMAK workspace:
 
 ```bash
-python3 -m http.server 3000
+python3 amak-server.py --port 3000
 ```
 
-Then open [http://localhost:3000/](http://localhost:3000/).
+Then open [http://localhost:3000/amak](http://localhost:3000/amak).
+
+The **My active projects** section lists only the current collaborator's `feature/<collaborator>/...` branches. A project can be reopened from a local branch or restored from its GitHub tracking branch without displaying other collaborators' work.
+
+The first screen asks for a short branch name. After selecting **Create branch**, AMAK creates `feature/<collaborator>/<short-description>` from the synchronized `main` branch. It then opens `http://localhost:3000/<short-description>`, where the collaborator chooses the page to prototype.
+
+The selected page keeps a stable working URL such as:
+
+```text
+http://localhost:3000/<short-description>/cinema
+```
+
+The collaborator can keep that preview open beside Codex and request changes in the conversation. The small AMAK indicator at the bottom of the prototype returns to the page chooser.
 
 ## Request a change with Codex
 
