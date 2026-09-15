@@ -6,7 +6,7 @@ This repository is a shared prototyping environment for CANAL+ product journeys.
 
 When a collaborator starts a request with `Bonjour Amak`, treat the rest of the message as a request to modify this prototype. Apply the same repository-synchronization checks when a collaborator starts a new conversation in this project.
 
-Treat `Bonjour Amak` as a trigger even when it is the entire message. Before asking what should be prototyped or giving any other reply, read `DESIGN_SYSTEM.md` and `DESIGN.md`, then check the current Git status. Report the observed Git state before requesting the missing prototype brief.
+Treat `Bonjour Amak` as a trigger even when it is the entire message. Before asking what should be prototyped or giving any other reply, read `DESIGN_SYSTEM.md` and `DESIGN.md`, check the current Git status, start the AMAK server and open its interface in the Codex browser. Do not merely print or share the URL: create or focus the browser tab and verify that the AMAK page responds. Report the observed Git state and the opened URL before requesting the missing prototype brief.
 
 Create one branch for one distinct prototype request. Follow-up messages about the same request must stay on its existing branch. A new `Bonjour Amak` request starts a new branch only when the previous request is complete or clearly unrelated.
 
@@ -25,7 +25,9 @@ For a new `Bonjour Amak` request, once `main` is clean and synchronized, start t
 python3 amak-server.py --port 3000
 ```
 
-Then open `http://localhost:3000/amak` in the Codex browser. Let the collaborator name and create the branch in this interface, unless their initial request already provides an unambiguous branch topic. After creation, the page chooser is available at `http://localhost:3000/<short-description>`.
+Before reusing an AMAK page that is already open, read `http://localhost:3000/api/amak/session`. Its `repositoryRoot` must exactly match the current repository root (`pwd -P`). Never infer the active Git branch from the browser URL. If the roots differ, stop the old AMAK server and restart it from the current repository before opening the interface.
+
+Then immediately open `http://localhost:3000/amak` in the Codex browser, using the available browser or preview tool. This action is mandatory for every new `Bonjour Amak` request and must happen without waiting for an additional request to view the result. If the browser cannot be opened, state the exact failure instead of claiming that AMAK is open. Let the collaborator name and create the branch in this interface, unless their initial request already provides an unambiguous branch topic. After creation, verify through `/api/amak/session` that both `repositoryRoot` and `branch` match the current Codex project before confirming that the branch is ready. The page chooser is available at `http://localhost:3000/<short-description>`.
 
 If the collaborator is already on the feature branch for the active request, do not switch branches or synchronize `main`; continue on that branch after checking its status.
 
@@ -60,7 +62,7 @@ After a change:
 
 1. Test the affected journey with keyboard-only navigation and at a narrow viewport.
 2. Check the browser console for errors.
-3. Start the AMAK local server from the repository root when the collaborator asks to view the result locally:
+3. Keep the AMAK local server available for preview. Outside the `Bonjour Amak` startup flow, start it from the repository root when the collaborator asks to view the result locally:
 
 ```bash
 python3 amak-server.py --port 3000
