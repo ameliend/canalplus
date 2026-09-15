@@ -19,6 +19,14 @@ Before changing files:
 5. If the working tree is clean, switch to `main`, update it with a fast-forward-only pull, then create a new branch from the updated `main`.
 6. If the working tree is not clean, preserve the local changes and explain which files are already modified before synchronizing.
 
+For a new `Bonjour Amak` request, once `main` is clean and synchronized, start the local workspace with:
+
+```bash
+python3 amak-server.py --port 3000
+```
+
+Then open `http://localhost:3000/amak` in the Codex browser. Let the collaborator name and create the branch in this interface, unless their initial request already provides an unambiguous branch topic. After creation, the page chooser is available at `http://localhost:3000/<short-description>`.
+
 If the collaborator is already on the feature branch for the active request, do not switch branches or synchronize `main`; continue on that branch after checking its status.
 
 Use this branch format:
@@ -52,11 +60,11 @@ After a change:
 
 1. Test the affected journey with keyboard-only navigation and at a narrow viewport.
 2. Check the browser console for errors.
-3. Start a local static server from the repository root when the collaborator asks to view the result locally:
+3. Start the AMAK local server from the repository root when the collaborator asks to view the result locally:
 
 ```bash
-python3 -m http.server 3000
+python3 amak-server.py --port 3000
 ```
 
-4. Share the exact local URL, normally `http://localhost:3000/`, and the branch name.
+4. Share the exact working URL, normally `http://localhost:3000/<short-description>/<page>`, and the full branch name.
 5. Summarise changed files, checks performed and any remaining uncertainty.

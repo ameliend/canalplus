@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AMAK — Nouveau prototype</title>
+    <link rel="stylesheet" href="/amak.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <img src="/canalplus-logo-v2.svg" alt="CANAL+" />
+      <span class="product-name">AMAK</span>
+      <span class="local-status"><span aria-hidden="true"></span> Espace local</span>
+    </header>
+
+    <main>
+      <div class="create-view">
+      <section class="projects" aria-labelledby="projects-title">
+        <p class="eyebrow">Ton espace</p>
+        <h1 id="projects-title">Mes projets en cours</h1>
+        <p class="intro">Retrouve ici uniquement tes branches AMAK, qu’elles soient locales ou déjà disponibles sur GitHub.</p>
+        <div id="project-list" class="project-list"></div>
+        <p id="project-empty" class="empty" hidden>Tu n’as pas encore de projet. Crée ton premier prototype ci-dessous.</p>
+        <p id="project-error" class="error" role="alert"></p>
+      </section>
+
+      <section class="panel new-project" aria-labelledby="create-title">
+        <p class="eyebrow">Nouveau prototype</p>
+        <h2 id="create-title">Créer un nouveau projet</h2>
+        <p class="intro">Donne un nom court à ta branche. AMAK créera un espace isolé à partir de <code>main</code>.</p>
+
+        <form id="branch-form" novalidate>
+          <label for="branch-name">Nom de la branche</label>
+          <div class="branch-field">
+            <span id="branch-prefix">feature/…/</span>
+            <input id="branch-name" name="branchName" autocomplete="off" maxlength="48" required
+              aria-describedby="branch-help branch-error" placeholder="ex. alerte-consentement" />
+          </div>
+          <p id="branch-help" class="help">Lettres, chiffres et tirets. Les espaces seront remplacés automatiquement.</p>
+          <p id="branch-error" class="error" role="alert"></p>
+          <div class="actions">
+            <button class="primary" type="submit">Créer la branche</button>
+            <a class="secondary" href="/canalplus-logged-out.html">Annuler</a>
+          </div>
+        </form>
+      </section>
+      </div>
+
+      <section class="pages-view" aria-labelledby="pages-title" hidden>
+        <nav aria-label="Fil d’Ariane"><a href="/amak">AMAK</a><span aria-hidden="true">/</span><span id="crumb-branch"></span></nav>
+        <p class="eyebrow">Branche prête</p>
+        <h1 id="pages-title">Choisis la page à modifier</h1>
+        <div class="branch-summary"><span aria-hidden="true">✓</span><div><strong id="active-branch"></strong><small>Les prochaines modifications resteront isolées sur cette branche.</small></div></div>
+        <div id="page-grid" class="page-grid"></div>
+      </section>
+    </main>
+
+    <template id="page-card-template">
+      <a class="page-card">
+        <span class="page-visual" aria-hidden="true"></span>
+        <span class="page-copy"><strong></strong><small>Ouvrir la page <span aria-hidden="true">→</span></small></span>
+      </a>
+    </template>
+
+    <template id="project-card-template">
+      <article class="project-card">
+        <div><strong></strong><small class="project-branch"></small></div>
+        <div class="project-actions"><span class="project-status"></span><button class="secondary" type="button">Reprendre</button></div>
+      </article>
+    </template>
+
+    <script>window.__AMAK_CONFIG__ = __AMAK_CONFIG_JSON__;</script>
+    <script src="/amak.js"></script>
+  </body>
+</html>
