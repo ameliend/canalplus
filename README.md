@@ -23,6 +23,10 @@ python3 amak-server.py --port 3000
 
 Then open [http://localhost:3000/amak](http://localhost:3000/amak).
 
+When a collaborator says `Bonjour Amak`, the Codex workflow must start this server and open the AMAK page automatically. The collaborator should not need to ask separately for the local preview.
+
+AMAK identifies the repository it controls through `/api/amak/session`. If port 3000 is already occupied by AMAK from another local clone, startup stops with both repository paths instead of silently reusing the wrong workspace.
+
 The **My active projects** section lists only the current collaborator's `feature/<collaborator>/...` branches. A project can be reopened from a local branch or restored from its GitHub tracking branch without displaying other collaborators' work.
 
 The first screen asks for a short branch name. After selecting **Create branch**, AMAK creates `feature/<collaborator>/<short-description>` from the synchronized `main` branch. It then opens `http://localhost:3000/<short-description>`, where the collaborator chooses the page to prototype.

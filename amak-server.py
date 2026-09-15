@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import errno
 import html
 import json
 import mimetypes
@@ -17,10 +18,20 @@ from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import unquote, urlparse
+from urllib.request import urlopen
 
 
 ROOT = Path(__file__).resolve().parent
 TOKEN = secrets.token_urlsafe(24)
+LAUNCHER_HTML = (ROOT / "amak.html").read_text(encoding="utf-8")
+LAUNCHER_ASSETS = {
+    "/amak.css": ("text/css; charset=utf-8", (ROOT / "amak.css").read_bytes()),
+    "/amak.js": ("text/javascript; charset=utf-8", (ROOT / "amak.js").read_bytes()),
+    "/canalplus-logo-v2.svg": (
+        "image/svg+xml",
+        (ROOT / "canalplus-logo-v2.svg").read_bytes(),
+    ),
+}
 PAGES = {
     "accueil": ("Accueil connecté", "canalplus-home-improved.html"),
     "decouvrir": ("Accueil non connecté", "canalplus-logged-out.html"),
@@ -79,6 +90,7 @@ def repository_state() -> dict[str, object]:
     clean = not git("status", "--porcelain").stdout.strip()
     branch_slug = branch.rsplit("/", 1)[-1] if branch else ""
     return {
+        "repositoryRoot": str(ROOT),
         "branch": branch,
         "branchSlug": branch_slug,
         "collaborator": collaborator,
@@ -185,6 +197,15 @@ class AmakHandler(SimpleHTTPRequestHandler):
 
     def do_GET(self) -> None:  # noqa: N802
         path = unquote(urlparse(self.path).path).rstrip("/") or "/"
+        if path in LAUNCHER_ASSETS:
+            content_type, data = LAUNCHER_ASSETS[path]
+            self.send_response(200)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Content-Length", str(len(data)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(data)
+            return
         if path == "/api/amak/session":
             try:
                 self.send_json({"ok": True, **repository_state()})
@@ -230,7 +251,7 @@ class AmakHandler(SimpleHTTPRequestHandler):
             self.send_json({"ok": False, "error": message}, 500)
 
     def serve_launcher(self, view: str, slug: str = "") -> None:
-        source = (ROOT / "amak.html").read_text(encoding="utf-8")
+        source = LAUNCHER_HTML
         config = json.dumps(
             {"token": TOKEN, "view": view, "slug": slug, "pages": PAGES},
             ensure_ascii=False,
@@ -277,7 +298,25 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Lance le workspace local AMAK.")
     parser.add_argument("--port", type=int, default=3000)
     args = parser.parse_args()
-    server = ThreadingHTTPServer(("127.0.0.1", args.port), AmakHandler)
+    try:
+        server = ThreadingHTTPServer(("127.0.0.1", args.port), AmakHandler)
+    except OSError as error:
+        if error.errno != errno.EADDRINUSE:
+            raise
+        existing_root = "inconnu"
+        try:
+            with urlopen(
+                f"http://127.0.0.1:{args.port}/api/amak/session", timeout=1
+            ) as response:
+                existing_root = json.load(response).get("repositoryRoot", "inconnu")
+        except (OSError, ValueError, json.JSONDecodeError):
+            pass
+        raise SystemExit(
+            f"Le port {args.port} est déjà utilisé par un serveur AMAK lancé depuis :\n"
+            f"{existing_root}\n"
+            f"Dossier demandé :\n{ROOT}\n"
+            "Arrête l’ancien serveur avant de continuer."
+        ) from error
     print(f"AMAK est disponible sur http://localhost:{args.port}/amak")
     try:
         server.serve_forever()
