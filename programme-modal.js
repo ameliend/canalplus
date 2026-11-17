@@ -124,9 +124,9 @@
     inertElements = [];
   };
 
-  const open = (card) => {
+  const open = (card, trigger = card) => {
     const wasOpen = modal.classList.contains('is-open');
-    if (!wasOpen) opener = card;
+    if (!wasOpen) opener = trigger;
     titleElement.textContent = getTitle(card);
     const image = getImage(card);
     hero.style.backgroundImage = image ? `linear-gradient(0deg, #181818 0%, transparent 52%), url("${image.replaceAll('"', '%22')}")` : '';
@@ -156,6 +156,11 @@
     if (!card || event.target.closest('.series-remove') || card.matches('.category-card') || card.closest('.chips, .channel-grid, .program-grid, .grid')) return;
     event.preventDefault();
     open(card);
+  });
+
+  document.addEventListener('amak:open-programme', (event) => {
+    const { card, trigger } = event.detail || {};
+    if (card instanceof HTMLElement && trigger instanceof HTMLElement) open(card, trigger);
   });
 
   document.addEventListener('keydown', (event) => {

@@ -1,0 +1,7 @@
+/* Page composition around the unmodified DIVE carousel. */
+.page-connected-home main { padding-top: 0; }
+#dive-hero { display: block; width: 100vw; margin-left: -5.5vw; margin-bottom: 24px; }
+.page-connected-home .chips { margin-top: 0; }
+@media (min-width: 761px) {
+  .page-connected-home .topbar { position: absolute; z-index: 10; background: transparent; border-bottom: 0; }
+}
